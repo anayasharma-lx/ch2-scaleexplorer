@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Scale Explorer — Ganita Prakash Grade 8</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#f5f4f0;--surface:#fff;--surface2:#f0ede8;--border:#d8d4cc;
+  --text:#1a1814;--text2:#5a5650;--text3:#9a958e;
+  --blue:#2c5f9e;--red:#c0392b;--green:#1a7a4a;--orange:#e08020;
+  --font:'DM Sans',-apple-system,sans-serif;--mono:'DM Mono',ui-monospace,monospace;
+}
+body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:100vh;-webkit-font-smoothing:antialiased;line-height:1.5}
+.page{max-width:880px;margin:0 auto;padding:28px 20px}
+.lbl{font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--text3);margin-bottom:5px}
+.title{font-size:22px;font-weight:700;margin-bottom:5px}
+.subtitle{font-size:14px;color:var(--text2);margin-bottom:22px;max-width:560px;line-height:1.5}
+.card{background:var(--surface);border:1.5px solid var(--border);border-radius:12px;padding:22px;margin-bottom:16px}
+
+/* Category filter */
+.cat-row{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:20px}
+.cat-btn{padding:6px 14px;border:1.5px solid var(--border);border-radius:8px;font-size:12.5px;font-weight:500;color:var(--text2);background:var(--surface);cursor:pointer;font-family:var(--font);transition:all .12s}
+.cat-btn.active{background:var(--text);color:#fff;border-color:var(--text)}
+.cat-btn:hover:not(.active){border-color:var(--text)}
+
+/* Scale strip */
+.scale-strip{position:relative;margin-bottom:22px}
+.scale-axis{height:6px;background:linear-gradient(to right,var(--blue),var(--green),var(--orange),var(--red));border-radius:3px;margin:0 8px}
+.scale-ticks{display:flex;justify-content:space-between;padding:4px 8px 0;font-family:var(--mono);font-size:10px;color:var(--text3);font-weight:600}
+.scale-label{text-align:center;font-size:11px;color:var(--text3);margin-top:2px}
+
+/* Entries */
+.entries-list{display:flex;flex-direction:column;gap:0;border-radius:10px;overflow:hidden;border:1.5px solid var(--border)}
+.entry-row{display:flex;align-items:center;gap:0;border-bottom:1px solid var(--border);transition:background .12s;cursor:pointer}
+.entry-row:last-child{border-bottom:none}
+.entry-row:hover{background:var(--surface2)}
+.entry-row.expanded{background:#fffbeb}
+.entry-exp-bar{width:52px;flex-shrink:0;padding:10px 8px;border-right:1px solid var(--border);text-align:center}
+.exp-pill{display:inline-block;padding:3px 8px;border-radius:6px;font-family:var(--mono);font-size:12px;font-weight:700;color:#fff}
+.entry-body{flex:1;padding:10px 14px}
+.entry-title{font-size:13.5px;font-weight:600;color:var(--text);margin-bottom:1px}
+.entry-val{font-family:var(--mono);font-size:12px;color:var(--text3)}
+.entry-detail{font-size:13px;color:var(--text2);padding:8px 14px 10px 74px;display:none;line-height:1.5;border-top:1px solid var(--border);background:#fffbeb}
+.entry-detail.open{display:block}
+.entry-cat{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.05em;padding:2px 7px;border-radius:5px;margin-left:auto;margin-right:14px;flex-shrink:0}
+
+/* Comparison panel */
+.comp-panel{background:var(--surface2);border:1.5px solid var(--border);border-radius:10px;padding:14px 16px;margin-bottom:14px}
+.cp-title{font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--text3);margin-bottom:8px}
+.cp-row{display:flex;align-items:center;gap:10px;font-size:13.5px}
+.cp-a{font-family:var(--mono);font-weight:700;color:var(--blue)}
+.cp-b{font-family:var(--mono);font-weight:700;color:var(--red)}
+.cp-diff{font-family:var(--mono);font-weight:700;color:var(--green)}
+
+.insight{background:#fff8f0;border:1.5px solid #f0d8c0;border-radius:10px;padding:13px 18px;font-size:13.5px;color:#6b4400;line-height:1.65}
+.insight strong{color:#a05000}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="lbl">Chapter 2 · Power Play</div>
+  <div class="title">Scale Explorer</div>
+  <div class="subtitle">From 10⁰ to 10²³ — animals, distances, times, and populations, all lined up by their powers of 10. Click any entry to see more details.</div>
+
+  <div class="card">
+    <div class="cat-row" id="catRow"></div>
+
+    <div class="scale-strip">
+      <div class="scale-axis"></div>
+      <div class="scale-ticks" id="scaleTicks"></div>
+      <div class="scale-label">Powers of 10 →</div>
+    </div>
+
+    <div class="entries-list" id="entriesList"></div>
+
+    <div class="comp-panel" id="compPanel" style="display:none">
+      <div class="cp-title">Comparing two selected entries</div>
+      <div class="cp-row" id="cpRow"></div>
+    </div>
+
+    <div class="insight">
+      <strong>Why powers of 10?</strong> Each step up the power of 10 multiplies the quantity by 10. The difference between 10⁶ and 10⁹ is a factor of 1000 — not 3. A number's exponent tells you roughly how many digits it has. The Sun is 10¹¹ m away; the nearest star beyond the Sun is 10¹⁶ m away — 100,000 times further.
+    </div>
+  </div>
+</div>
+
+<script>
+const CAT_COLORS={animals:'#2c5f9e',time:'#1a7a4a',distances:'#c0392b',populations:'#e08020'};
+const ENTRIES=[
+  {exp:0,  cat:'animals',     title:'Northern white rhinos remaining',val:'2 (= 2 × 10⁰)',detail:'As of mid-2025, only 2 northern white rhinos remain in the world, both female, at Ol Pejeta Conservancy, Kenya.'},
+  {exp:1,  cat:'animals',     title:'Hainan gibbons',val:'42 ≈ 4 × 10¹',detail:'The rarest ape on Earth. Only about 42 individuals survive in one forest reserve on Hainan island, China.'},
+  {exp:2,  cat:'animals',     title:'Kakapo (flightless parrot)',val:'242 ≈ 2 × 10²',detail:'New Zealand\'s flightless parrot. Intensive conservation has grown numbers from 51 in 1995 to 242 by mid-2025.'},
+  {exp:3,  cat:'animals',     title:'Komodo dragons',val:'<3000 ≈ 3 × 10³',detail:'The world\'s largest lizard. Fewer than 3000 remain, all in Indonesia. Listed as Endangered.'},
+  {exp:4,  cat:'animals',     title:'Maned wolves',val:'17000 ≈ 1.7 × 10⁴',detail:'South America\'s tallest wild canid. Most live in Brazil\'s cerrado grasslands.'},
+  {exp:5,  cat:'animals',     title:'African elephants',val:'415000 ≈ 4 × 10⁵',detail:'About 4.15 lakh as of 2018. Numbers halved between 1979 and 1989 due to poaching.'},
+  {exp:6,  cat:'animals',     title:'American alligators',val:'5 million = 5 × 10⁶',detail:'Once endangered, now recovered to about 50 lakh thanks to conservation efforts in the USA.'},
+  {exp:7,  cat:'animals',     title:'Camels (global)',val:'35 million ≈ 3.5 × 10⁷',detail:'India has only about 2.5 lakh of the world\'s 3.5 crore camels. Most are in Africa and Asia.'},
+  {exp:8,  cat:'animals',     title:'Water buffaloes',val:'200 million = 2 × 10⁸',detail:'Over 20 crore water buffaloes worldwide, the vast majority in Asia.'},
+  {exp:9,  cat:'populations', title:'World human population',val:'8.2 billion = 8.2 × 10⁹',detail:'As of 2025. Took 300,000 years to reach 1 billion (1800), then just 200 more years to reach 8 billion.'},
+  {exp:10, cat:'animals',     title:'Chickens alive at any time',val:'33 billion ≈ 3.3 × 10¹⁰',detail:'More chickens exist at any moment than any other bird. About 4 for every human.'},
+  {exp:12, cat:'animals',     title:'Trees on Earth',val:'3 trillion = 3 × 10¹²',detail:'A 2023 estimate. About 400 trees per person. Being lost at ~15 billion/year.'},
+  {exp:14, cat:'animals',     title:'Mosquito population',val:'110 trillion ≈ 10¹⁴',detail:'The most dangerous animal to humans. Estimated 110 trillion globally, on every continent except Antarctica.'},
+  {exp:15, cat:'animals',     title:'Ants on Earth',val:'20 quadrillion = 2 × 10¹⁶',detail:'Ants alone outweigh all wild birds and wild mammals combined. About 2.5 million ants per human.'},
+  {exp:21, cat:'distances',   title:'Grains of sand on all beaches/deserts',val:'10²¹',detail:'Enough sand to give every ant 10 little sandcastles. More than the number of stars in the observable universe.'},
+  {exp:23, cat:'distances',   title:'Stars in the observable universe',val:'2 × 10²³',detail:'About 200 sextillion stars. Our Milky Way alone has about 10¹¹ stars.'},
+  {exp:11, cat:'distances',   title:'Earth–Sun distance',val:'1.496 × 10¹¹ m',detail:'One Astronomical Unit (AU) = 149,600,000 km. Light takes about 8 minutes to cover this distance.'},
+  {exp:12, cat:'distances',   title:'Sun–Saturn distance',val:'1.4335 × 10¹² m',detail:'About 9.5 AU. Saturn\'s rings span about 280,000 km.'},
+  {exp:0,  cat:'time',        title:'One heartbeat',val:'≈ 1 second = 10⁰ s',detail:'A resting adult heart beats once per second. Over a lifetime, the heart beats about 2.5 billion times.'},
+  {exp:3,  cat:'time',        title:'Low Earth orbit (one revolution)',val:'≈ 5.5 × 10³ s (90 min)',detail:'The International Space Station orbits Earth every 90 minutes at about 28,000 km/h.'},
+  {exp:7,  cat:'time',        title:'Time to reach Mars (Mangalyaan)',val:'2.65 × 10⁷ s (298 days)',detail:'India\'s Mars Orbiter Mission (Mangalyaan) took 298 days — about 307 days total from launch to Mars orbit.'},
+  {exp:9,  cat:'time',        title:'Halley\'s Comet orbital period',val:'≈ 2.4 × 10⁹ s (75 years)',detail:'Halley\'s Comet last visited in 1986 and returns next around 2061. Observed since at least 240 BCE.'},
+  {exp:10, cat:'time',        title:'Chola dynasty duration',val:'≈ 3 × 10¹⁰ s (900 years)',detail:'One of the longest-ruling dynasties in world history, from 3rd century BCE to 12th century CE.'},
+  {exp:11, cat:'time',        title:'Age of oldest living tree',val:'≈ 1.6 × 10¹¹ s (5000 years)',detail:'Methuselah, a bristlecone pine in California, is about 5000 years old.'},
+  {exp:15, cat:'time',        title:'Age of Himalayas',val:'≈ 1.7 × 10¹⁵ s (55 million years)',detail:'The Himalayas continue to grow by a few mm each year as the Indian Plate pushes into the Eurasian Plate.'},
+  {exp:17, cat:'time',        title:'Age of Earth',val:'≈ 1.4 × 10¹⁷ s (4.5 billion years)',detail:'Earth formed about 4.5 billion years ago from gas and dust around the young Sun.'},
+  {exp:17, cat:'time',        title:'Age of the Milky Way',val:'≈ 4.3 × 10¹⁷ s (13.6 billion years)',detail:'Our galaxy formed about 13.6 billion years ago, just 200 million years after the Big Bang.'},
+];
+
+let activeCat='all', expandedIdx=null;
+
+function expColor(e){
+  const t=Math.min(1,Math.max(0,e/24));
+  const r=Math.round(44+t*(192-44)), g=Math.round(95+t*(57-95)), b=Math.round(158+t*(43-158));
+  return `rgb(${r},${g},${b})`;
+}
+
+function buildCats(){
+  const row=document.getElementById('catRow');
+  row.innerHTML='';
+  ['all','animals','time','distances','populations'].forEach(cat=>{
+    const btn=document.createElement('button');
+    btn.className='cat-btn'+(cat===activeCat?' active':'');
+    btn.textContent=cat==='all'?'All categories':cat.charAt(0).toUpperCase()+cat.slice(1);
+    btn.onclick=()=>{activeCat=cat;buildCats();buildEntries();};
+    row.appendChild(btn);
+  });
+}
+
+function buildTicks(){
+  const ticks=document.getElementById('scaleTicks');
+  const exps=[0,3,6,9,12,15,18,21,23];
+  ticks.innerHTML=exps.map(e=>`<span>10${sup(e)}</span>`).join('');
+}
+
+function sup(n){const map={'0':'⁰','1':'¹','2':'²','3':'³','4':'⁴','5':'⁵','6':'⁶','7':'⁷','8':'⁸','9':'⁹','-':'⁻'};return String(n).split('').map(c=>map[c]||c).join('');}
+
+function buildEntries(){
+  const list=document.getElementById('entriesList');
+  const filtered=ENTRIES.filter(e=>activeCat==='all'||e.cat===activeCat).sort((a,b)=>a.exp-b.exp);
+  list.innerHTML='';
+  filtered.forEach((entry,i)=>{
+    const color=CAT_COLORS[entry.cat]||'var(--blue)';
+    const row=document.createElement('div');
+    row.className='entry-row';
+    row.innerHTML=`
+      <div class="entry-exp-bar">
+        <div class="exp-pill" style="background:${expColor(entry.exp)}">10${sup(entry.exp)}</div>
+      </div>
+      <div class="entry-body">
+        <div class="entry-title">${entry.title}</div>
+        <div class="entry-val">${entry.val}</div>
+      </div>
+      <div class="entry-cat" style="background:${color}18;color:${color};border:1px solid ${color}44">${entry.cat}</div>`;
+    const detail=document.createElement('div');
+    detail.className='entry-detail';
+    detail.textContent=entry.detail;
+    const wrap=document.createElement('div');
+    wrap.appendChild(row);
+    wrap.appendChild(detail);
+    row.onclick=()=>{
+      detail.classList.toggle('open');
+      row.classList.toggle('expanded');
+    };
+    list.appendChild(wrap);
+  });
+}
+
+buildCats();buildTicks();buildEntries();
+</script>
+</body>
+</html>
