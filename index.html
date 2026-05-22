@@ -5,181 +5,562 @@
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
 <title>Scale Explorer — Ganita Prakash Grade 8</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;0,700;1,400;1,600&family=DM+Mono:wght@400;500;600&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --bg:#f5f4f0;--surface:#fff;--surface2:#f0ede8;--border:#d8d4cc;
-  --text:#1a1814;--text2:#5a5650;--text3:#9a958e;
-  --blue:#2c5f9e;--red:#c0392b;--green:#1a7a4a;--orange:#e08020;
-  --font:'DM Sans',-apple-system,sans-serif;--mono:'DM Mono',ui-monospace,monospace;
+  --paper:#faf8f4;  --paper2:#f3f0ea;  --paper3:#e8e3d8;
+  --ink:#1c1a16;    --ink2:#4a4640;    --ink3:#8a8580;
+  --rule:#d4cfc5;
+  --teal:#1d6a72;   --teal2:#2a8a94;   --teal-bg:#e8f4f5;
+  --rust:#b84a2a;   --rust-bg:#fdf0ec;
+  --gold:#c08030;   --gold-bg:#fdf5e8;
+  --sage:#3a6a48;   --sage-bg:#eaf2ec;
+  --violet:#6a4a90;
+  --font:'DM Sans',sans-serif;
+  --serif:'Lora',Georgia,serif;
+  --mono:'DM Mono',ui-monospace,monospace;
+  --shadow:0 2px 12px rgba(28,26,22,.08);
 }
-body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:100vh;-webkit-font-smoothing:antialiased;line-height:1.5}
-.page{max-width:880px;margin:0 auto;padding:28px 20px}
-.lbl{font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--text3);margin-bottom:5px}
-.title{font-size:22px;font-weight:700;margin-bottom:5px}
-.subtitle{font-size:14px;color:var(--text2);margin-bottom:22px;max-width:560px;line-height:1.5}
-.card{background:var(--surface);border:1.5px solid var(--border);border-radius:12px;padding:22px;margin-bottom:16px}
+body{
+  font-family:var(--font);background:var(--paper);color:var(--ink);
+  min-height:100vh;-webkit-font-smoothing:antialiased;
+  padding:28px 20px 60px;line-height:1.6;
+  background-image:
+    radial-gradient(circle at 20% 20%,rgba(29,106,114,.04) 0,transparent 50%),
+    radial-gradient(circle at 80% 80%,rgba(192,128,48,.04) 0,transparent 50%);
+}
+.app{max-width:960px;margin:0 auto}
+
+/* ── HEADER ── */
+.header{margin-bottom:24px;padding-bottom:18px;border-bottom:1.5px solid var(--rule)}
+.chapter-badge{display:inline-flex;align-items:center;gap:8px;background:var(--paper2);border:1.5px solid var(--rule);border-radius:20px;padding:4px 14px 4px 10px;font-size:11px;font-weight:600;letter-spacing:.6px;text-transform:uppercase;color:var(--ink3);margin-bottom:12px}
+.badge-num{width:22px;height:22px;border-radius:50%;background:var(--teal);color:#fff;font-size:12px;font-weight:700;font-family:var(--mono);display:flex;align-items:center;justify-content:center}
+h1{font-family:var(--serif);font-size:26px;font-weight:700;color:var(--ink);letter-spacing:-.3px;line-height:1.2;margin-bottom:5px}
+.header-sub{font-size:14px;color:var(--ink2);max-width:560px;line-height:1.55}
+
+/* ── CARD ── */
+.card{background:var(--paper);border:1.5px solid var(--rule);border-radius:14px;padding:22px;margin-bottom:18px;box-shadow:var(--shadow)}
+
+/* ── CONCEPT ── */
+.concept{background:var(--gold-bg);border-left:3px solid var(--gold);border-radius:0 8px 8px 0;padding:11px 16px;margin-bottom:20px;font-family:var(--serif);font-style:italic;font-size:14px;color:#4a3010;line-height:1.65}
+.concept strong{font-style:normal;font-weight:700;color:#3a2008}
+
+/* ── LAYOUT ── */
+.main-layout{display:grid;grid-template-columns:280px 1fr;gap:20px;align-items:start}
+@media(max-width:720px){.main-layout{grid-template-columns:1fr}}
+
+/* ── LEFT PANEL ── */
+.left-panel{display:flex;flex-direction:column;gap:12px;position:sticky;top:20px}
+
+.sec-lbl{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--ink3);margin-bottom:8px}
 
 /* Category filter */
-.cat-row{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:20px}
-.cat-btn{padding:6px 14px;border:1.5px solid var(--border);border-radius:8px;font-size:12.5px;font-weight:500;color:var(--text2);background:var(--surface);cursor:pointer;font-family:var(--font);transition:all .12s}
-.cat-btn.active{background:var(--text);color:#fff;border-color:var(--text)}
-.cat-btn:hover:not(.active){border-color:var(--text)}
+.cat-btns{display:flex;flex-direction:column;gap:4px}
+.cat-btn{
+  display:flex;align-items:center;gap:9px;
+  padding:8px 11px;border:1.5px solid var(--rule);border-radius:8px;
+  cursor:pointer;transition:all .14s;background:#fff;font-family:var(--font);
+  font-size:12.5px;font-weight:600;color:var(--ink2);text-align:left
+}
+.cat-btn:hover{border-color:var(--ink3);color:var(--ink)}
+.cat-btn.active{color:#fff;border-color:transparent}
+.cat-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
 
-/* Scale strip */
-.scale-strip{position:relative;margin-bottom:22px}
-.scale-axis{height:6px;background:linear-gradient(to right,var(--blue),var(--green),var(--orange),var(--red));border-radius:3px;margin:0 8px}
-.scale-ticks{display:flex;justify-content:space-between;padding:4px 8px 0;font-family:var(--mono);font-size:10px;color:var(--text3);font-weight:600}
-.scale-label{text-align:center;font-size:11px;color:var(--text3);margin-top:2px}
+/* Zoom range */
+.zoom-box{background:#fff;border:1.5px solid var(--rule);border-radius:10px;padding:12px 14px}
+.zoom-row{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+.zoom-row input[type=range]{flex:1;height:5px;cursor:pointer}
+.zoom-val{font-family:var(--mono);font-size:13px;font-weight:700;color:var(--teal);min-width:36px;text-align:right}
+.zoom-hint{font-size:11px;color:var(--ink3);line-height:1.4}
 
-/* Entries */
-.entries-list{display:flex;flex-direction:column;gap:0;border-radius:10px;overflow:hidden;border:1.5px solid var(--border)}
-.entry-row{display:flex;align-items:center;gap:0;border-bottom:1px solid var(--border);transition:background .12s;cursor:pointer}
-.entry-row:last-child{border-bottom:none}
-.entry-row:hover{background:var(--surface2)}
-.entry-row.expanded{background:#fffbeb}
-.entry-exp-bar{width:52px;flex-shrink:0;padding:10px 8px;border-right:1px solid var(--border);text-align:center}
-.exp-pill{display:inline-block;padding:3px 8px;border-radius:6px;font-family:var(--mono);font-size:12px;font-weight:700;color:#fff}
-.entry-body{flex:1;padding:10px 14px}
-.entry-title{font-size:13.5px;font-weight:600;color:var(--text);margin-bottom:1px}
-.entry-val{font-family:var(--mono);font-size:12px;color:var(--text3)}
-.entry-detail{font-size:13px;color:var(--text2);padding:8px 14px 10px 74px;display:none;line-height:1.5;border-top:1px solid var(--border);background:#fffbeb}
-.entry-detail.open{display:block}
-.entry-cat{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.05em;padding:2px 7px;border-radius:5px;margin-left:auto;margin-right:14px;flex-shrink:0}
+/* Selected entry card */
+.sel-card{background:var(--paper2);border:1.5px solid var(--rule);border-radius:10px;padding:12px 14px;min-height:80px}
+.sel-exp{font-family:var(--mono);font-size:24px;font-weight:800;margin-bottom:2px}
+.sel-title{font-size:13px;font-weight:700;color:var(--ink);margin-bottom:2px}
+.sel-val{font-family:var(--mono);font-size:11px;color:var(--ink3);margin-bottom:6px}
+.sel-detail{font-size:12px;color:var(--ink2);line-height:1.55}
+.sel-empty{font-size:13px;color:var(--ink3);font-family:var(--serif);font-style:italic}
 
-/* Comparison panel */
-.comp-panel{background:var(--surface2);border:1.5px solid var(--border);border-radius:10px;padding:14px 16px;margin-bottom:14px}
-.cp-title{font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--text3);margin-bottom:8px}
-.cp-row{display:flex;align-items:center;gap:10px;font-size:13.5px}
-.cp-a{font-family:var(--mono);font-weight:700;color:var(--blue)}
-.cp-b{font-family:var(--mono);font-weight:700;color:var(--red)}
-.cp-diff{font-family:var(--mono);font-weight:700;color:var(--green)}
+/* Compare strip */
+.compare-strip{background:var(--teal-bg);border:1.5px solid var(--teal2);border-radius:10px;padding:11px 13px;display:none}
+.cmp-lbl{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--teal);margin-bottom:6px}
+.cmp-row{font-family:var(--mono);font-size:13px;color:var(--ink);line-height:1.6}
+.cmp-big{font-size:20px;font-weight:800;color:var(--teal)}
 
-.insight{background:#fff8f0;border:1.5px solid #f0d8c0;border-radius:10px;padding:13px 18px;font-size:13.5px;color:#6b4400;line-height:1.65}
-.insight strong{color:#a05000}
+/* ── RIGHT: SCALE STRIP ── */
+.scale-outer{
+  background:#fff;border:1.5px solid var(--rule);border-radius:14px;
+  overflow:hidden;position:relative
+}
+.scale-canvas-wrap{
+  position:relative;
+  overflow-y:auto;
+  overflow-x:hidden;
+  max-height:680px;
+  scrollbar-width:thin;
+  scrollbar-color:var(--rule) transparent;
+}
+.scale-canvas-wrap::-webkit-scrollbar{width:5px}
+.scale-canvas-wrap::-webkit-scrollbar-thumb{background:var(--rule);border-radius:3px}
+
+#scale-canvas{display:block;width:100%}
+
+/* ── INSIGHT ── */
+.insight{background:var(--gold-bg);border:1px solid #e0c080;border-left:3px solid var(--gold);border-radius:0 8px 8px 0;padding:12px 15px;font-size:13px;color:#6b4400;line-height:1.65;margin-top:4px}
+.insight strong{color:#4a2e00}
 </style>
 </head>
 <body>
-<div class="page">
-  <div class="lbl">Chapter 2 · Power Play</div>
-  <div class="title">Scale Explorer</div>
-  <div class="subtitle">From 10⁰ to 10²³ — animals, distances, times, and populations, all lined up by their powers of 10. Click any entry to see more details.</div>
+<div class="app">
+  <div class="header">
+    <div class="chapter-badge"><div class="badge-num">2</div>Chapter 2 · Power Play</div>
+    <h1>Scale Explorer</h1>
+    <p class="header-sub">From 10⁰ to 10²³ — every step up the scale multiplies by 10. Click any marker to learn more. Use the zoom to feel the gaps between powers.</p>
+  </div>
 
   <div class="card">
-    <div class="cat-row" id="catRow"></div>
-
-    <div class="scale-strip">
-      <div class="scale-axis"></div>
-      <div class="scale-ticks" id="scaleTicks"></div>
-      <div class="scale-label">Powers of 10 →</div>
+    <div class="concept">
+      <strong>The logarithmic scale:</strong> on this strip, each tick mark is 10 times the previous one. The distance from 10³ to 10⁶ looks the same as from 10⁶ to 10⁹ — but the actual difference is 999 million. Equal visual gaps hide enormous numerical jumps.
     </div>
 
-    <div class="entries-list" id="entriesList"></div>
+    <div class="main-layout">
+      <!-- LEFT -->
+      <div class="left-panel">
 
-    <div class="comp-panel" id="compPanel" style="display:none">
-      <div class="cp-title">Comparing two selected entries</div>
-      <div class="cp-row" id="cpRow"></div>
+        <div>
+          <div class="sec-lbl">Filter by category</div>
+          <div class="cat-btns" id="cat-btns"></div>
+        </div>
+
+        <div class="zoom-box">
+          <div class="sec-lbl">Zoom range</div>
+          <div class="zoom-row">
+            <span style="font-size:11px;color:var(--ink3);white-space:nowrap">10⁰</span>
+            <input type="range" id="zoom-lo" min="0" max="22" value="0" style="accent-color:var(--teal)">
+            <span class="zoom-val" id="zoom-lo-val">10⁰</span>
+          </div>
+          <div class="zoom-row">
+            <span style="font-size:11px;color:var(--ink3);white-space:nowrap">10²³</span>
+            <input type="range" id="zoom-hi" min="1" max="23" value="23" style="accent-color:var(--rust)">
+            <span class="zoom-val" id="zoom-hi-val">10²³</span>
+          </div>
+          <div class="zoom-hint">Narrow the range to zoom into a smaller section of the scale.</div>
+        </div>
+
+        <div class="sel-card" id="sel-card">
+          <div class="sel-empty">Click any marker on the scale →</div>
+        </div>
+
+        <div class="compare-strip" id="cmp-strip">
+          <div class="cmp-lbl">Scale comparison</div>
+          <div class="cmp-row" id="cmp-row"></div>
+        </div>
+
+      </div>
+
+      <!-- RIGHT: CANVAS -->
+      <div class="scale-outer">
+        <div class="scale-canvas-wrap">
+          <canvas id="scale-canvas"></canvas>
+        </div>
+      </div>
     </div>
 
     <div class="insight">
-      <strong>Why powers of 10?</strong> Each step up the power of 10 multiplies the quantity by 10. The difference between 10⁶ and 10⁹ is a factor of 1000 — not 3. A number's exponent tells you roughly how many digits it has. The Sun is 10¹¹ m away; the nearest star beyond the Sun is 10¹⁶ m away — 100,000 times further.
+      <strong>Why equal gaps feel unfair:</strong> the jump from 10⁰ to 10¹² looks like only half the strip, but it's the difference between 1 and 1,000,000,000,000. The jump from 10¹² to 10²³ looks the same size — but is a factor of 100,000,000,000 times larger. Scientific notation and exponents are the only language large enough to express this.
     </div>
   </div>
 </div>
 
 <script>
-const CAT_COLORS={animals:'#2c5f9e',time:'#1a7a4a',distances:'#c0392b',populations:'#e08020'};
-const ENTRIES=[
-  {exp:0,  cat:'animals',     title:'Northern white rhinos remaining',val:'2 (= 2 × 10⁰)',detail:'As of mid-2025, only 2 northern white rhinos remain in the world, both female, at Ol Pejeta Conservancy, Kenya.'},
-  {exp:1,  cat:'animals',     title:'Hainan gibbons',val:'42 ≈ 4 × 10¹',detail:'The rarest ape on Earth. Only about 42 individuals survive in one forest reserve on Hainan island, China.'},
-  {exp:2,  cat:'animals',     title:'Kakapo (flightless parrot)',val:'242 ≈ 2 × 10²',detail:'New Zealand\'s flightless parrot. Intensive conservation has grown numbers from 51 in 1995 to 242 by mid-2025.'},
-  {exp:3,  cat:'animals',     title:'Komodo dragons',val:'<3000 ≈ 3 × 10³',detail:'The world\'s largest lizard. Fewer than 3000 remain, all in Indonesia. Listed as Endangered.'},
-  {exp:4,  cat:'animals',     title:'Maned wolves',val:'17000 ≈ 1.7 × 10⁴',detail:'South America\'s tallest wild canid. Most live in Brazil\'s cerrado grasslands.'},
-  {exp:5,  cat:'animals',     title:'African elephants',val:'415000 ≈ 4 × 10⁵',detail:'About 4.15 lakh as of 2018. Numbers halved between 1979 and 1989 due to poaching.'},
-  {exp:6,  cat:'animals',     title:'American alligators',val:'5 million = 5 × 10⁶',detail:'Once endangered, now recovered to about 50 lakh thanks to conservation efforts in the USA.'},
-  {exp:7,  cat:'animals',     title:'Camels (global)',val:'35 million ≈ 3.5 × 10⁷',detail:'India has only about 2.5 lakh of the world\'s 3.5 crore camels. Most are in Africa and Asia.'},
-  {exp:8,  cat:'animals',     title:'Water buffaloes',val:'200 million = 2 × 10⁸',detail:'Over 20 crore water buffaloes worldwide, the vast majority in Asia.'},
-  {exp:9,  cat:'populations', title:'World human population',val:'8.2 billion = 8.2 × 10⁹',detail:'As of 2025. Took 300,000 years to reach 1 billion (1800), then just 200 more years to reach 8 billion.'},
-  {exp:10, cat:'animals',     title:'Chickens alive at any time',val:'33 billion ≈ 3.3 × 10¹⁰',detail:'More chickens exist at any moment than any other bird. About 4 for every human.'},
-  {exp:12, cat:'animals',     title:'Trees on Earth',val:'3 trillion = 3 × 10¹²',detail:'A 2023 estimate. About 400 trees per person. Being lost at ~15 billion/year.'},
-  {exp:14, cat:'animals',     title:'Mosquito population',val:'110 trillion ≈ 10¹⁴',detail:'The most dangerous animal to humans. Estimated 110 trillion globally, on every continent except Antarctica.'},
-  {exp:15, cat:'animals',     title:'Ants on Earth',val:'20 quadrillion = 2 × 10¹⁶',detail:'Ants alone outweigh all wild birds and wild mammals combined. About 2.5 million ants per human.'},
-  {exp:21, cat:'distances',   title:'Grains of sand on all beaches/deserts',val:'10²¹',detail:'Enough sand to give every ant 10 little sandcastles. More than the number of stars in the observable universe.'},
-  {exp:23, cat:'distances',   title:'Stars in the observable universe',val:'2 × 10²³',detail:'About 200 sextillion stars. Our Milky Way alone has about 10¹¹ stars.'},
-  {exp:11, cat:'distances',   title:'Earth–Sun distance',val:'1.496 × 10¹¹ m',detail:'One Astronomical Unit (AU) = 149,600,000 km. Light takes about 8 minutes to cover this distance.'},
-  {exp:12, cat:'distances',   title:'Sun–Saturn distance',val:'1.4335 × 10¹² m',detail:'About 9.5 AU. Saturn\'s rings span about 280,000 km.'},
-  {exp:0,  cat:'time',        title:'One heartbeat',val:'≈ 1 second = 10⁰ s',detail:'A resting adult heart beats once per second. Over a lifetime, the heart beats about 2.5 billion times.'},
-  {exp:3,  cat:'time',        title:'Low Earth orbit (one revolution)',val:'≈ 5.5 × 10³ s (90 min)',detail:'The International Space Station orbits Earth every 90 minutes at about 28,000 km/h.'},
-  {exp:7,  cat:'time',        title:'Time to reach Mars (Mangalyaan)',val:'2.65 × 10⁷ s (298 days)',detail:'India\'s Mars Orbiter Mission (Mangalyaan) took 298 days — about 307 days total from launch to Mars orbit.'},
-  {exp:9,  cat:'time',        title:'Halley\'s Comet orbital period',val:'≈ 2.4 × 10⁹ s (75 years)',detail:'Halley\'s Comet last visited in 1986 and returns next around 2061. Observed since at least 240 BCE.'},
-  {exp:10, cat:'time',        title:'Chola dynasty duration',val:'≈ 3 × 10¹⁰ s (900 years)',detail:'One of the longest-ruling dynasties in world history, from 3rd century BCE to 12th century CE.'},
-  {exp:11, cat:'time',        title:'Age of oldest living tree',val:'≈ 1.6 × 10¹¹ s (5000 years)',detail:'Methuselah, a bristlecone pine in California, is about 5000 years old.'},
-  {exp:15, cat:'time',        title:'Age of Himalayas',val:'≈ 1.7 × 10¹⁵ s (55 million years)',detail:'The Himalayas continue to grow by a few mm each year as the Indian Plate pushes into the Eurasian Plate.'},
-  {exp:17, cat:'time',        title:'Age of Earth',val:'≈ 1.4 × 10¹⁷ s (4.5 billion years)',detail:'Earth formed about 4.5 billion years ago from gas and dust around the young Sun.'},
-  {exp:17, cat:'time',        title:'Age of the Milky Way',val:'≈ 4.3 × 10¹⁷ s (13.6 billion years)',detail:'Our galaxy formed about 13.6 billion years ago, just 200 million years after the Big Bang.'},
+// ══════════════════════════════════════════════
+// DATA
+// ══════════════════════════════════════════════
+const CATS = {
+  all:       {label:'All', color:'#4a4640'},
+  animals:   {label:'Animals & Life', color:'#2a7a4a'},
+  people:    {label:'People', color:'#1d6a72'},
+  distance:  {label:'Distances', color:'#b84a2a'},
+  time:      {label:'Time', color:'#6a4a90'},
+  nature:    {label:'Nature & Space', color:'#c08030'},
+};
+
+const ENTRIES = [
+  {exp:0,  cat:'animals',  emoji:'🦏', title:'Northern white rhinos',    val:'2 = 2 × 10⁰',       detail:'Only 2 remain — both female — at Ol Pejeta Conservancy, Kenya. Functionally extinct in the wild.'},
+  {exp:1,  cat:'animals',  emoji:'🐒', title:'Hainan gibbons',           val:'~42 ≈ 4 × 10¹',      detail:'The rarest ape on Earth. Confined to one forest reserve on Hainan island, China.'},
+  {exp:2,  cat:'animals',  emoji:'🦜', title:'Kakapos (flightless parrot)',val:'242 ≈ 2 × 10²',     detail:'Conservation grew numbers from just 51 in 1995. All individuals are named and tracked.'},
+  {exp:3,  cat:'animals',  emoji:'🦎', title:'Komodo dragons',           val:'<3,000 ≈ 3 × 10³',   detail:'World\'s largest lizard. All live in Indonesia. Listed as Endangered by the IUCN.'},
+  {exp:4,  cat:'animals',  emoji:'🐺', title:'Maned wolves',             val:'17,000 ≈ 1.7 × 10⁴', detail:'South America\'s tallest wild canid. Most live in Brazil\'s cerrado grasslands.'},
+  {exp:5,  cat:'animals',  emoji:'🐘', title:'African elephants',        val:'415,000 ≈ 4 × 10⁵',  detail:'Numbers halved between 1979–1989 due to poaching. Now slowly recovering.'},
+  {exp:6,  cat:'animals',  emoji:'🐊', title:'American alligators',      val:'5 million = 5 × 10⁶', detail:'Once endangered. Now recovered to 5 million, a conservation success story.'},
+  {exp:7,  cat:'animals',  emoji:'🐪', title:'Camels worldwide',         val:'35 million ≈ 3.5 × 10⁷',detail:'Most are in Africa and Asia. India has about 2.5 lakh — just 0.7% of the world total.'},
+  {exp:8,  cat:'animals',  emoji:'🦬', title:'Water buffaloes',          val:'200 million = 2 × 10⁸',detail:'Over 97% live in Asia. India has the world\'s largest population.'},
+  {exp:9,  cat:'people',   emoji:'👥', title:'World human population',   val:'8.2 billion = 8.2 × 10⁹',detail:'Took 300,000 years to reach 1 billion (1800). Reached 8 billion in 2022.'},
+  {exp:10, cat:'animals',  emoji:'🐔', title:'Chickens alive right now', val:'33 billion ≈ 3.3 × 10¹⁰',detail:'4 chickens for every human. More chickens alive at any moment than any other bird.'},
+  {exp:11, cat:'distance', emoji:'☀️', title:'Earth to Sun',            val:'1.496 × 10¹¹ m',       detail:'One Astronomical Unit (AU). Light takes 8 minutes 20 seconds to cover this distance.'},
+  {exp:12, cat:'animals',  emoji:'🌳', title:'Trees on Earth',           val:'3 trillion = 3 × 10¹²', detail:'~400 trees per person. Being lost at about 15 billion per year to deforestation.'},
+  {exp:12, cat:'distance', emoji:'🪐', title:'Sun to Saturn',           val:'1.4 × 10¹² m',          detail:'About 9.5 AU. Saturn\'s famous rings span about 280,000 km.'},
+  {exp:14, cat:'animals',  emoji:'🦟', title:'Mosquitoes on Earth',     val:'110 trillion ≈ 10¹⁴',   detail:'The most dangerous animal to humans. Found on every continent except Antarctica.'},
+  {exp:15, cat:'time',     emoji:'⛰️', title:'Age of Himalayas (in sec)',val:'1.7 × 10¹⁵ s ≈ 55 Myr',detail:'The Himalayas formed when the Indian Plate collided with Asia. Still growing ~5 mm/year.'},
+  {exp:16, cat:'animals',  emoji:'🐜', title:'Ants on Earth',           val:'20 quadrillion = 2 × 10¹⁶',detail:'Ants alone outweigh all wild birds and wild mammals combined. 2.5 million per human.'},
+  {exp:17, cat:'time',     emoji:'🌍', title:'Age of Earth (in sec)',    val:'1.4 × 10¹⁷ s ≈ 4.5 Gyr',detail:'Earth formed from gas and dust around the young Sun, about 4.5 billion years ago.'},
+  {exp:17, cat:'time',     emoji:'🌌', title:'Age of Milky Way (in sec)',val:'4.3 × 10¹⁷ s ≈ 13.6 Gyr',detail:'Our galaxy formed just 200 million years after the Big Bang, 13.6 billion years ago.'},
+  {exp:21, cat:'nature',   emoji:'🏖️', title:'Grains of sand (beaches+deserts)',val:'≈ 10²¹',      detail:'More grains of sand than stars in the observable universe — but not more than atoms in a teaspoon of water.'},
+  {exp:23, cat:'nature',   emoji:'⭐', title:'Stars in observable universe',val:'2 × 10²³',          detail:'About 200 sextillion stars. Our Milky Way alone has ~100 billion (10¹¹) of them.'},
 ];
 
-let activeCat='all', expandedIdx=null;
+// ══════════════════════════════════════════════
+// STATE
+// ══════════════════════════════════════════════
+let activeCat = 'all';
+let zoomLo = 0, zoomHi = 23;
+let selectedEntry = null;
+let lastSelectedEntry = null;
+let hitAreas = []; // {entry, x, y, w, h}
 
+// ══════════════════════════════════════════════
+// HELPERS
+// ══════════════════════════════════════════════
+function sup(n){
+  return String(n).split('').map(c=>({'−':'⁻','-':'⁻','0':'⁰','1':'¹','2':'²','3':'³','4':'⁴','5':'⁵','6':'⁶','7':'⁷','8':'⁸','9':'⁹'}[c]||c)).join('');
+}
+
+// Map exponent to a warm colour: teal→sage→gold→rust
 function expColor(e){
-  const t=Math.min(1,Math.max(0,e/24));
-  const r=Math.round(44+t*(192-44)), g=Math.round(95+t*(57-95)), b=Math.round(158+t*(43-158));
-  return `rgb(${r},${g},${b})`;
+  // 0–7: teal range, 8–14: sage→gold, 15–23: gold→rust
+  if(e <= 7){
+    const t = e/7;
+    const r=Math.round(29+t*(58-29)), g=Math.round(106+t*(106-106)), b=Math.round(114+t*(72-114));
+    return `rgb(${r},${g},${b})`;
+  } else if(e <= 14){
+    const t=(e-8)/6;
+    const r=Math.round(42+t*(192-42)), g=Math.round(122+t*(128-122)), b=Math.round(72+t*(48-72));
+    return `rgb(${r},${g},${b})`;
+  } else {
+    const t=(e-15)/8;
+    const r=Math.round(160+t*(184-160)), g=Math.round(80+t*(74-80)), b=Math.round(48+t*(42-48));
+    return `rgb(${r},${g},${b})`;
+  }
 }
 
-function buildCats(){
-  const row=document.getElementById('catRow');
-  row.innerHTML='';
-  ['all','animals','time','distances','populations'].forEach(cat=>{
-    const btn=document.createElement('button');
-    btn.className='cat-btn'+(cat===activeCat?' active':'');
-    btn.textContent=cat==='all'?'All categories':cat.charAt(0).toUpperCase()+cat.slice(1);
-    btn.onclick=()=>{activeCat=cat;buildCats();buildEntries();};
-    row.appendChild(btn);
+// ══════════════════════════════════════════════
+// CATEGORY BUTTONS
+// ══════════════════════════════════════════════
+function buildCatBtns(){
+  const container = document.getElementById('cat-btns');
+  container.innerHTML = '';
+  Object.entries(CATS).forEach(([key, cfg]) => {
+    const btn = document.createElement('button');
+    btn.className = 'cat-btn' + (activeCat === key ? ' active' : '');
+    if(activeCat === key) btn.style.background = cfg.color;
+    btn.innerHTML = `<div class="cat-dot" style="background:${key==='all'?'var(--ink3)':cfg.color}${activeCat===key?'':'88'}"></div>${cfg.label}`;
+    btn.addEventListener('click', () => {
+      activeCat = key;
+      buildCatBtns();
+      drawScale();
+    });
+    container.appendChild(btn);
   });
 }
 
-function buildTicks(){
-  const ticks=document.getElementById('scaleTicks');
-  const exps=[0,3,6,9,12,15,18,21,23];
-  ticks.innerHTML=exps.map(e=>`<span>10${sup(e)}</span>`).join('');
-}
+// ══════════════════════════════════════════════
+// DRAW
+// ══════════════════════════════════════════════
+const canvas = document.getElementById('scale-canvas');
+const ctx    = canvas.getContext('2d');
+const PR     = Math.min(window.devicePixelRatio || 1, 2);
 
-function sup(n){const map={'0':'⁰','1':'¹','2':'²','3':'³','4':'⁴','5':'⁵','6':'⁶','7':'⁷','8':'⁸','9':'⁹','-':'⁻'};return String(n).split('').map(c=>map[c]||c).join('');}
+function drawScale(){
+  const wrap   = canvas.parentElement;
+  const W      = wrap.clientWidth;
+  const range  = zoomHi - zoomLo;
 
-function buildEntries(){
-  const list=document.getElementById('entriesList');
-  const filtered=ENTRIES.filter(e=>activeCat==='all'||e.cat===activeCat).sort((a,b)=>a.exp-b.exp);
-  list.innerHTML='';
-  filtered.forEach((entry,i)=>{
-    const color=CAT_COLORS[entry.cat]||'var(--blue)';
-    const row=document.createElement('div');
-    row.className='entry-row';
-    row.innerHTML=`
-      <div class="entry-exp-bar">
-        <div class="exp-pill" style="background:${expColor(entry.exp)}">10${sup(entry.exp)}</div>
-      </div>
-      <div class="entry-body">
-        <div class="entry-title">${entry.title}</div>
-        <div class="entry-val">${entry.val}</div>
-      </div>
-      <div class="entry-cat" style="background:${color}18;color:${color};border:1px solid ${color}44">${entry.cat}</div>`;
-    const detail=document.createElement('div');
-    detail.className='entry-detail';
-    detail.textContent=entry.detail;
-    const wrap=document.createElement('div');
-    wrap.appendChild(row);
-    wrap.appendChild(detail);
-    row.onclick=()=>{
-      detail.classList.toggle('open');
-      row.classList.toggle('expanded');
-    };
-    list.appendChild(wrap);
+  // Height: 60px per exponent unit in zoom range, minimum 500px
+  const PX_PER_EXP = Math.max(36, Math.min(70, 700 / range));
+  const H = Math.max(500, range * PX_PER_EXP + 100);
+
+  canvas.style.width  = W + 'px';
+  canvas.style.height = H + 'px';
+  canvas.width  = W * PR;
+  canvas.height = H * PR;
+  ctx.resetTransform();
+  ctx.scale(PR, PR);
+
+  // Background
+  ctx.fillStyle = '#fff';
+  ctx.fillRect(0, 0, W, H);
+
+  const PAD_TOP    = 30;
+  const PAD_BOT    = 30;
+  const AXIS_X     = 110; // x position of the vertical axis line
+  const drawH      = H - PAD_TOP - PAD_BOT;
+
+  hitAreas = [];
+
+  // Map exponent → y position
+  function expToY(e){
+    const t = (e - zoomLo) / range;
+    return PAD_TOP + t * drawH;
+  }
+
+  // Draw background bands (alternating)
+  for(let e = zoomLo; e < zoomHi; e++){
+    const y1 = expToY(e);
+    const y2 = expToY(e+1);
+    if(e % 2 === 0){
+      ctx.fillStyle = 'rgba(243,240,234,.5)';
+      ctx.fillRect(0, y1, W, y2-y1);
+    }
+  }
+
+  // Gridlines + exponent labels
+  for(let e = zoomLo; e <= zoomHi; e++){
+    const y = expToY(e);
+
+    // Major gridline
+    ctx.strokeStyle = e % 3 === 0 ? '#c8c0b8' : '#e0dbd4';
+    ctx.lineWidth   = e % 3 === 0 ? 1.5 : 0.8;
+    ctx.setLineDash(e % 3 === 0 ? [] : [3,3]);
+    ctx.beginPath();
+    ctx.moveTo(AXIS_X, y);
+    ctx.lineTo(W, y);
+    ctx.stroke();
+    ctx.setLineDash([]);
+
+    // Exponent label (left side)
+    ctx.font      = `bold 11px DM Mono, monospace`;
+    ctx.fillStyle = e % 3 === 0 ? '#4a4640' : '#9a9590';
+    ctx.textAlign = 'right';
+    ctx.textBaseline = 'middle';
+    ctx.fillText(`10${sup(e)}`, AXIS_X - 10, y);
+  }
+
+  // The axis line itself
+  ctx.strokeStyle = '#c8c0b8';
+  ctx.lineWidth   = 2.5;
+  ctx.setLineDash([]);
+  ctx.beginPath();
+  ctx.moveTo(AXIS_X, PAD_TOP);
+  ctx.lineTo(AXIS_X, PAD_TOP + drawH);
+  ctx.stroke();
+
+  // Axis ticks
+  for(let e = zoomLo; e <= zoomHi; e++){
+    const y = expToY(e);
+    ctx.strokeStyle = '#9a9590';
+    ctx.lineWidth = 1.5;
+    ctx.beginPath();
+    ctx.moveTo(AXIS_X - 5, y);
+    ctx.lineTo(AXIS_X + 5, y);
+    ctx.stroke();
+  }
+
+  // ENTRIES
+  const filtered = ENTRIES.filter(entry =>
+    activeCat === 'all' || entry.cat === activeCat
+  ).filter(entry =>
+    entry.exp >= zoomLo && entry.exp <= zoomHi
+  );
+
+  // Group by exponent to stagger horizontally
+  const byExp = {};
+  filtered.forEach(entry => {
+    if(!byExp[entry.exp]) byExp[entry.exp] = [];
+    byExp[entry.exp].push(entry);
   });
+
+  const DOT_R    = 9;
+  const ENTRY_H  = 26;
+  const START_X  = AXIS_X + 20;
+
+  Object.entries(byExp).forEach(([expStr, entries]) => {
+    const e   = +expStr;
+    const y   = expToY(e);
+    const col = expColor(e);
+    const isSel = entries.some(en => en === selectedEntry);
+
+    entries.forEach((entry, slotIdx) => {
+      const isSel = entry === selectedEntry;
+      const entryY = y + slotIdx * (ENTRY_H + 4) - (entries.length - 1) * (ENTRY_H + 4) / 2;
+
+      // Connector line from axis dot to label
+      ctx.strokeStyle = isSel ? col : col + '60';
+      ctx.lineWidth   = isSel ? 2 : 1;
+      ctx.beginPath();
+      ctx.moveTo(AXIS_X, entryY);
+      ctx.lineTo(START_X + DOT_R, entryY);
+      ctx.stroke();
+
+      // Axis dot
+      ctx.beginPath();
+      ctx.arc(AXIS_X, entryY, isSel ? DOT_R : 6, 0, Math.PI*2);
+      ctx.fillStyle = isSel ? col : col + 'aa';
+      ctx.fill();
+      if(isSel){
+        ctx.strokeStyle = '#fff';
+        ctx.lineWidth = 2;
+        ctx.stroke();
+      }
+
+      // Label pill background
+      const labelX   = START_X + DOT_R * 2 + 6;
+      const emojiW   = 22;
+      const textW    = Math.min(W - labelX - emojiW - 30, 300);
+
+      // Draw emoji
+      ctx.font = `${ENTRY_H * 0.75}px serif`;
+      ctx.textAlign = 'left';
+      ctx.textBaseline = 'middle';
+      ctx.fillText(entry.emoji, labelX, entryY);
+
+      // Draw title
+      ctx.font = isSel
+        ? `bold 13px DM Sans, sans-serif`
+        : `600 12px DM Sans, sans-serif`;
+      ctx.fillStyle = isSel ? '#1c1a16' : '#4a4640';
+      ctx.textAlign = 'left';
+      ctx.textBaseline = 'middle';
+      // Clip title to available width
+      let title = entry.title;
+      while(ctx.measureText(title).width > textW - emojiW - 10 && title.length > 10){
+        title = title.slice(0, -4) + '…';
+      }
+      ctx.fillText(title, labelX + emojiW + 4, entryY - 1);
+
+      // Value below title
+      ctx.font = `500 10px DM Mono, monospace`;
+      ctx.fillStyle = isSel ? col : '#8a8580';
+      ctx.fillText(entry.val, labelX + emojiW + 4, entryY + 10);
+
+      // Hit area
+      const hitW = Math.min(W - labelX, 400);
+      hitAreas.push({entry, x: AXIS_X - DOT_R, y: entryY - ENTRY_H/2, w: hitW + DOT_R + 20, h: ENTRY_H});
+
+      // Selected: highlight glow
+      if(isSel){
+        ctx.strokeStyle = col + '40';
+        ctx.lineWidth = 12;
+        ctx.setLineDash([]);
+        ctx.beginPath();
+        ctx.moveTo(AXIS_X, entryY);
+        ctx.lineTo(labelX + emojiW + 4 + Math.min(ctx.measureText(title).width, textW), entryY);
+        ctx.stroke();
+      }
+    });
+  });
+
+  // "×10" annotations between major ticks (left side)
+  if(range <= 10){
+    for(let e = zoomLo; e < zoomHi; e++){
+      const y1 = expToY(e);
+      const y2 = expToY(e+1);
+      const midY = (y1+y2)/2;
+      ctx.font = '9px DM Sans, sans-serif';
+      ctx.fillStyle = '#c0bab4';
+      ctx.textAlign = 'right';
+      ctx.textBaseline = 'middle';
+      ctx.fillText('×10', AXIS_X - 14, midY);
+    }
+  }
 }
 
-buildCats();buildTicks();buildEntries();
+// ══════════════════════════════════════════════
+// CLICK HANDLER
+// ══════════════════════════════════════════════
+canvas.addEventListener('click', e => {
+  const rect = canvas.getBoundingClientRect();
+  const mx   = e.clientX - rect.left;
+  const my   = e.clientY - rect.top;
+  let hit    = null;
+  for(const area of hitAreas){
+    if(mx >= area.x && mx <= area.x + area.w && my >= area.y && my <= area.y + area.h){
+      hit = area.entry;
+      break;
+    }
+  }
+  if(hit === selectedEntry){ selectedEntry = null; }
+  else selectedEntry = hit;
+  drawScale();
+  updateSelPanel();
+});
+
+function updateSelPanel(){
+  const card = document.getElementById('sel-card');
+  const cmp  = document.getElementById('cmp-strip');
+
+  if(!selectedEntry){
+    card.innerHTML = '<div class="sel-empty">Click any marker on the scale →</div>';
+    cmp.style.display = 'none';
+    lastSelectedEntry = null;
+    return;
+  }
+
+  const col = expColor(selectedEntry.exp);
+  card.innerHTML = `
+    <div class="sel-exp" style="color:${col}">10${sup(selectedEntry.exp)}</div>
+    <div class="sel-title">${selectedEntry.emoji} ${selectedEntry.title}</div>
+    <div class="sel-val">${selectedEntry.val}</div>
+    <div class="sel-detail">${selectedEntry.detail}</div>
+  `;
+
+  // Compare with previous selection
+  if(lastSelectedEntry && lastSelectedEntry !== selectedEntry){
+    const a = lastSelectedEntry, b = selectedEntry;
+    const diff = Math.abs(b.exp - a.exp);
+    const factor = Math.pow(10, diff);
+    const factorStr = diff >= 6 ? factor.toExponential(0) : factor.toLocaleString('en-IN');
+    const bigger = b.exp > a.exp ? b : a;
+    const smaller = b.exp > a.exp ? a : b;
+    cmp.style.display = 'block';
+    document.getElementById('cmp-row').innerHTML =
+      `<div>${bigger.emoji} <strong>${bigger.title}</strong> (10${sup(bigger.exp)})</div>
+       <div style="color:var(--teal)">is <span class="cmp-big">${factorStr}×</span> larger than</div>
+       <div>${smaller.emoji} <strong>${smaller.title}</strong> (10${sup(smaller.exp)})</div>
+       <div style="margin-top:4px;font-size:11px;color:var(--ink3)">That's a difference of 10${sup(diff)} = ${factorStr}</div>`;
+  } else {
+    cmp.style.display = 'none';
+  }
+
+  lastSelectedEntry = selectedEntry;
+}
+
+// ══════════════════════════════════════════════
+// ZOOM
+// ══════════════════════════════════════════════
+function updateZoomLabels(){
+  document.getElementById('zoom-lo-val').textContent = `10${sup(zoomLo)}`;
+  document.getElementById('zoom-hi-val').textContent = `10${sup(zoomHi)}`;
+}
+
+document.getElementById('zoom-lo').addEventListener('input', e => {
+  zoomLo = Math.min(+e.target.value, zoomHi - 1);
+  e.target.value = zoomLo;
+  updateZoomLabels();
+  drawScale();
+});
+document.getElementById('zoom-hi').addEventListener('input', e => {
+  zoomHi = Math.max(+e.target.value, zoomLo + 1);
+  e.target.value = zoomHi;
+  updateZoomLabels();
+  drawScale();
+});
+
+// ══════════════════════════════════════════════
+// RESIZE
+// ══════════════════════════════════════════════
+let resizeTimer;
+new ResizeObserver(()=>{
+  clearTimeout(resizeTimer);
+  resizeTimer = setTimeout(drawScale, 80);
+}).observe(canvas.parentElement);
+
+// ══════════════════════════════════════════════
+// INIT
+// ══════════════════════════════════════════════
+buildCatBtns();
+updateZoomLabels();
+drawScale();
 </script>
 </body>
 </html>
