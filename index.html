@@ -5,562 +5,468 @@
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
 <title>Scale Explorer — Ganita Prakash Grade 8</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;0,700;1,400;1,600&family=DM+Mono:wght@400;500;600&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --paper:#faf8f4;  --paper2:#f3f0ea;  --paper3:#e8e3d8;
-  --ink:#1c1a16;    --ink2:#4a4640;    --ink3:#8a8580;
-  --rule:#d4cfc5;
-  --teal:#1d6a72;   --teal2:#2a8a94;   --teal-bg:#e8f4f5;
-  --rust:#b84a2a;   --rust-bg:#fdf0ec;
-  --gold:#c08030;   --gold-bg:#fdf5e8;
-  --sage:#3a6a48;   --sage-bg:#eaf2ec;
-  --violet:#6a4a90;
-  --font:'DM Sans',sans-serif;
-  --serif:'Lora',Georgia,serif;
-  --mono:'DM Mono',ui-monospace,monospace;
-  --shadow:0 2px 12px rgba(28,26,22,.08);
+  --parch:#f9f5ed;
+  --parch2:#f2ead8;
+  --parch3:#e8dfc8;
+  --parch4:#d8cdb0;
+  --ink:#1c1608;
+  --ink2:#3a3020;
+  --ink3:#6a5c3a;
+  --ink4:#9a8c6a;
+  --rule:#c8bda0;
+  --rule2:#e0d5be;
+  --ochre:#c47a0a;
+  --ochre2:#e09a18;
+  --ochre-bg:rgba(196,122,10,.1);
+  --crimson:#a02020;
+  --teal:#0a6a5a;
+  --forest:#1a5a2a;
+  --plum:#5a1a6a;
+  --navy:#1a2a6a;
+  --serif:'Instrument Serif',Georgia,serif;
+  --mono:'Space Mono',ui-monospace,monospace;
 }
+html,body{width:100%;height:100%;overflow:hidden}
 body{
-  font-family:var(--font);background:var(--paper);color:var(--ink);
-  min-height:100vh;-webkit-font-smoothing:antialiased;
-  padding:28px 20px 60px;line-height:1.6;
-  background-image:
-    radial-gradient(circle at 20% 20%,rgba(29,106,114,.04) 0,transparent 50%),
-    radial-gradient(circle at 80% 80%,rgba(192,128,48,.04) 0,transparent 50%);
+  font-family:var(--serif);
+  background:var(--parch);
+  color:var(--ink);
+  -webkit-font-smoothing:antialiased;
+  display:flex;flex-direction:column;
+  position:fixed;inset:0;
 }
-.app{max-width:960px;margin:0 auto}
+
+/* aged paper texture overlay */
+body::before{
+  content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
+  background-image:
+    repeating-linear-gradient(
+      0deg,
+      transparent,transparent 18px,
+      rgba(160,140,100,.07) 18px,rgba(160,140,100,.07) 19px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      transparent,transparent 120px,
+      rgba(160,140,100,.03) 120px,rgba(160,140,100,.03) 121px
+    );
+}
 
 /* ── HEADER ── */
-.header{margin-bottom:24px;padding-bottom:18px;border-bottom:1.5px solid var(--rule)}
-.chapter-badge{display:inline-flex;align-items:center;gap:8px;background:var(--paper2);border:1.5px solid var(--rule);border-radius:20px;padding:4px 14px 4px 10px;font-size:11px;font-weight:600;letter-spacing:.6px;text-transform:uppercase;color:var(--ink3);margin-bottom:12px}
-.badge-num{width:22px;height:22px;border-radius:50%;background:var(--teal);color:#fff;font-size:12px;font-weight:700;font-family:var(--mono);display:flex;align-items:center;justify-content:center}
-h1{font-family:var(--serif);font-size:26px;font-weight:700;color:var(--ink);letter-spacing:-.3px;line-height:1.2;margin-bottom:5px}
-.header-sub{font-size:14px;color:var(--ink2);max-width:560px;line-height:1.55}
+.top{
+  position:relative;z-index:10;
+  border-bottom:2px solid var(--ink);
+  background:var(--parch2);
+  display:flex;align-items:stretch;
+  flex-shrink:0;
+}
+.top-left{
+  padding:10px 18px;border-right:1px solid var(--rule);
+  display:flex;flex-direction:column;justify-content:center;min-width:190px;
+}
+.top-chapter{font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--ink4);font-family:var(--mono);margin-bottom:2px}
+.top-title{font-size:20px;font-weight:400;color:var(--ink);line-height:1.1}
+.top-center{flex:1;padding:10px 20px;display:flex;align-items:center}
+.top-concept{
+  font-style:italic;font-size:13px;color:var(--ink3);
+  border-left:2px solid var(--ochre);padding-left:12px;line-height:1.65;
+}
+.top-concept strong{color:var(--ochre);font-style:normal;font-family:var(--mono);font-size:11px}
+.top-right{
+  border-left:1px solid var(--rule);padding:10px 14px;
+  display:flex;flex-direction:column;justify-content:center;align-items:flex-end;
+  gap:2px;min-width:140px;
+}
+.tr-lbl{font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink4);font-family:var(--mono)}
+.tr-val{font-size:14px;font-weight:700;color:var(--ink);font-family:var(--mono)}
 
-/* ── CARD ── */
-.card{background:var(--paper);border:1.5px solid var(--rule);border-radius:14px;padding:22px;margin-bottom:18px;box-shadow:var(--shadow)}
+/* ── MAIN ── */
+.main{
+  flex:1;display:grid;
+  grid-template-columns:230px 1fr;
+  overflow:hidden;min-height:0;
+  position:relative;z-index:5;
+}
 
-/* ── CONCEPT ── */
-.concept{background:var(--gold-bg);border-left:3px solid var(--gold);border-radius:0 8px 8px 0;padding:11px 16px;margin-bottom:20px;font-family:var(--serif);font-style:italic;font-size:14px;color:#4a3010;line-height:1.65}
-.concept strong{font-style:normal;font-weight:700;color:#3a2008}
+/* ── LEFT ── */
+.left{
+  border-right:1px solid var(--rule);
+  display:flex;flex-direction:column;
+  background:var(--parch2);
+  overflow:hidden;
+}
+.lp{
+  padding:12px 14px;
+  border-bottom:1px solid var(--rule2);
+  flex-shrink:0;
+}
+.lp-lbl{
+  font-size:9px;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--ink4);font-family:var(--mono);margin-bottom:8px;
+}
 
-/* ── LAYOUT ── */
-.main-layout{display:grid;grid-template-columns:280px 1fr;gap:20px;align-items:start}
-@media(max-width:720px){.main-layout{grid-template-columns:1fr}}
-
-/* ── LEFT PANEL ── */
-.left-panel{display:flex;flex-direction:column;gap:12px;position:sticky;top:20px}
-
-.sec-lbl{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--ink3);margin-bottom:8px}
-
-/* Category filter */
-.cat-btns{display:flex;flex-direction:column;gap:4px}
+/* category buttons */
+.cat-list{display:flex;flex-direction:column;gap:3px}
 .cat-btn{
-  display:flex;align-items:center;gap:9px;
-  padding:8px 11px;border:1.5px solid var(--rule);border-radius:8px;
-  cursor:pointer;transition:all .14s;background:#fff;font-family:var(--font);
-  font-size:12.5px;font-weight:600;color:var(--ink2);text-align:left
+  display:flex;align-items:center;gap:8px;
+  padding:7px 10px;
+  border:1px solid var(--rule2);border-radius:0;
+  cursor:pointer;transition:all .14s;background:transparent;
+  font-family:var(--serif);font-size:13px;color:var(--ink3);
+  text-align:left;
 }
-.cat-btn:hover{border-color:var(--ink3);color:var(--ink)}
-.cat-btn.active{color:#fff;border-color:transparent}
-.cat-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+.cat-btn:hover{border-color:var(--rule);background:var(--parch3)}
+.cat-btn.active{background:var(--ink);color:var(--parch);border-color:var(--ink)}
+.cat-btn.active .cat-dot{background:var(--parch)!important}
+.cat-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
 
-/* Zoom range */
-.zoom-box{background:#fff;border:1.5px solid var(--rule);border-radius:10px;padding:12px 14px}
-.zoom-row{display:flex;align-items:center;gap:8px;margin-bottom:8px}
-.zoom-row input[type=range]{flex:1;height:5px;cursor:pointer}
-.zoom-val{font-family:var(--mono);font-size:13px;font-weight:700;color:var(--teal);min-width:36px;text-align:right}
-.zoom-hint{font-size:11px;color:var(--ink3);line-height:1.4}
-
-/* Selected entry card */
-.sel-card{background:var(--paper2);border:1.5px solid var(--rule);border-radius:10px;padding:12px 14px;min-height:80px}
-.sel-exp{font-family:var(--mono);font-size:24px;font-weight:800;margin-bottom:2px}
-.sel-title{font-size:13px;font-weight:700;color:var(--ink);margin-bottom:2px}
-.sel-val{font-family:var(--mono);font-size:11px;color:var(--ink3);margin-bottom:6px}
-.sel-detail{font-size:12px;color:var(--ink2);line-height:1.55}
-.sel-empty{font-size:13px;color:var(--ink3);font-family:var(--serif);font-style:italic}
-
-/* Compare strip */
-.compare-strip{background:var(--teal-bg);border:1.5px solid var(--teal2);border-radius:10px;padding:11px 13px;display:none}
-.cmp-lbl{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--teal);margin-bottom:6px}
-.cmp-row{font-family:var(--mono);font-size:13px;color:var(--ink);line-height:1.6}
-.cmp-big{font-size:20px;font-weight:800;color:var(--teal)}
-
-/* ── RIGHT: SCALE STRIP ── */
-.scale-outer{
-  background:#fff;border:1.5px solid var(--rule);border-radius:14px;
-  overflow:hidden;position:relative
+/* zoom */
+.zoom-box{display:flex;flex-direction:column;gap:8px}
+.zoom-row{display:flex;align-items:center;gap:8px}
+.zoom-row input[type=range]{
+  flex:1;height:3px;
+  -webkit-appearance:none;
+  background:var(--rule);border-radius:2px;outline:none;cursor:pointer;
 }
-.scale-canvas-wrap{
-  position:relative;
-  overflow-y:auto;
-  overflow-x:hidden;
-  max-height:680px;
-  scrollbar-width:thin;
-  scrollbar-color:var(--rule) transparent;
+.zoom-row input[type=range]::-webkit-slider-thumb{
+  -webkit-appearance:none;width:14px;height:14px;border-radius:50%;
+  background:var(--ink);cursor:pointer;
 }
-.scale-canvas-wrap::-webkit-scrollbar{width:5px}
-.scale-canvas-wrap::-webkit-scrollbar-thumb{background:var(--rule);border-radius:3px}
+.zoom-lbl{font-size:10px;color:var(--ink4);font-family:var(--mono);min-width:30px}
+.zoom-val{font-family:var(--mono);font-size:11px;font-weight:700;color:var(--ochre);min-width:42px;text-align:right}
+.zoom-hint{font-size:10px;color:var(--ink4);font-family:var(--mono);line-height:1.5}
 
-#scale-canvas{display:block;width:100%}
+/* selected card */
+.sel-card{
+  padding:12px 14px;flex:1;overflow-y:auto;
+}
+.sel-empty{font-style:italic;font-size:13px;color:var(--ink4)}
+.sel-exp{font-family:var(--mono);font-size:22px;font-weight:700;margin-bottom:3px}
+.sel-title{font-size:14px;font-weight:400;color:var(--ink);margin-bottom:2px}
+.sel-val{font-family:var(--mono);font-size:10px;color:var(--ink4);margin-bottom:8px}
+.sel-detail{font-size:12px;color:var(--ink3);font-style:italic;line-height:1.65}
 
-/* ── INSIGHT ── */
-.insight{background:var(--gold-bg);border:1px solid #e0c080;border-left:3px solid var(--gold);border-radius:0 8px 8px 0;padding:12px 15px;font-size:13px;color:#6b4400;line-height:1.65;margin-top:4px}
-.insight strong{color:#4a2e00}
+/* compare strip */
+.cmp-strip{
+  display:none;
+  padding:10px 14px;
+  background:var(--parch3);
+  border-top:1px solid var(--rule2);
+  font-size:11px;color:var(--ink3);
+  font-family:var(--mono);line-height:1.7;
+  flex-shrink:0;
+}
+.cmp-strip.show{display:block}
+.cmp-big{font-size:18px;font-weight:700;color:var(--ochre)}
+
+/* ── RIGHT ── */
+.right{
+  display:flex;flex-direction:column;
+  overflow:hidden;
+  background:var(--parch);
+}
+.scale-wrap{
+  flex:1;overflow-y:auto;overflow-x:hidden;
+  scrollbar-width:thin;scrollbar-color:var(--rule2) transparent;
+}
+.scale-wrap::-webkit-scrollbar{width:4px}
+.scale-wrap::-webkit-scrollbar-thumb{background:var(--rule2)}
+#scale-cvs{display:block;width:100%}
 </style>
 </head>
 <body>
-<div class="app">
-  <div class="header">
-    <div class="chapter-badge"><div class="badge-num">2</div>Chapter 2 · Power Play</div>
-    <h1>Scale Explorer</h1>
-    <p class="header-sub">From 10⁰ to 10²³ — every step up the scale multiplies by 10. Click any marker to learn more. Use the zoom to feel the gaps between powers.</p>
+
+<!-- HEADER -->
+<div class="top">
+  <div class="top-left">
+    <div class="top-chapter">Ch·02 · Power Play</div>
+    <div class="top-title">Scale Explorer</div>
   </div>
-
-  <div class="card">
-    <div class="concept">
-      <strong>The logarithmic scale:</strong> on this strip, each tick mark is 10 times the previous one. The distance from 10³ to 10⁶ looks the same as from 10⁶ to 10⁹ — but the actual difference is 999 million. Equal visual gaps hide enormous numerical jumps.
+  <div class="top-center">
+    <div class="top-concept">
+      <strong>The logarithmic scale:</strong> each tick is 10× the last. Equal visual gaps hide <em>enormous</em> numerical jumps. Click any marker — see the comparison.
     </div>
-
-    <div class="main-layout">
-      <!-- LEFT -->
-      <div class="left-panel">
-
-        <div>
-          <div class="sec-lbl">Filter by category</div>
-          <div class="cat-btns" id="cat-btns"></div>
-        </div>
-
-        <div class="zoom-box">
-          <div class="sec-lbl">Zoom range</div>
-          <div class="zoom-row">
-            <span style="font-size:11px;color:var(--ink3);white-space:nowrap">10⁰</span>
-            <input type="range" id="zoom-lo" min="0" max="22" value="0" style="accent-color:var(--teal)">
-            <span class="zoom-val" id="zoom-lo-val">10⁰</span>
-          </div>
-          <div class="zoom-row">
-            <span style="font-size:11px;color:var(--ink3);white-space:nowrap">10²³</span>
-            <input type="range" id="zoom-hi" min="1" max="23" value="23" style="accent-color:var(--rust)">
-            <span class="zoom-val" id="zoom-hi-val">10²³</span>
-          </div>
-          <div class="zoom-hint">Narrow the range to zoom into a smaller section of the scale.</div>
-        </div>
-
-        <div class="sel-card" id="sel-card">
-          <div class="sel-empty">Click any marker on the scale →</div>
-        </div>
-
-        <div class="compare-strip" id="cmp-strip">
-          <div class="cmp-lbl">Scale comparison</div>
-          <div class="cmp-row" id="cmp-row"></div>
-        </div>
-
-      </div>
-
-      <!-- RIGHT: CANVAS -->
-      <div class="scale-outer">
-        <div class="scale-canvas-wrap">
-          <canvas id="scale-canvas"></canvas>
-        </div>
-      </div>
-    </div>
-
-    <div class="insight">
-      <strong>Why equal gaps feel unfair:</strong> the jump from 10⁰ to 10¹² looks like only half the strip, but it's the difference between 1 and 1,000,000,000,000. The jump from 10¹² to 10²³ looks the same size — but is a factor of 100,000,000,000 times larger. Scientific notation and exponents are the only language large enough to express this.
-    </div>
+  </div>
+  <div class="top-right">
+    <div class="tr-lbl">Viewing range</div>
+    <div class="tr-val" id="tr-val">10⁰ — 10²³</div>
   </div>
 </div>
 
+<!-- MAIN -->
+<div class="main">
+
+  <!-- LEFT -->
+  <div class="left">
+    <div class="lp">
+      <div class="lp-lbl">Filter</div>
+      <div class="cat-list" id="cat-list"></div>
+    </div>
+
+    <div class="lp">
+      <div class="lp-lbl">Zoom range</div>
+      <div class="zoom-box">
+        <div class="zoom-row">
+          <span class="zoom-lbl">lo</span>
+          <input type="range" id="zlo" min="0" max="22" value="0">
+          <span class="zoom-val" id="zlo-v">10⁰</span>
+        </div>
+        <div class="zoom-row">
+          <span class="zoom-lbl">hi</span>
+          <input type="range" id="zhi" min="1" max="23" value="23">
+          <span class="zoom-val" id="zhi-v">10²³</span>
+        </div>
+        <div class="zoom-hint">Narrow to zoom into any section</div>
+      </div>
+    </div>
+
+    <div class="sel-card" id="sel-card">
+      <div class="sel-empty">Click any marker on the scale →</div>
+    </div>
+
+    <div class="cmp-strip" id="cmp-strip"></div>
+  </div>
+
+  <!-- RIGHT -->
+  <div class="right">
+    <div class="scale-wrap">
+      <canvas id="scale-cvs"></canvas>
+    </div>
+  </div>
+
+</div>
+
 <script>
-// ══════════════════════════════════════════════
-// DATA
-// ══════════════════════════════════════════════
 const CATS = {
-  all:       {label:'All', color:'#4a4640'},
-  animals:   {label:'Animals & Life', color:'#2a7a4a'},
-  people:    {label:'People', color:'#1d6a72'},
-  distance:  {label:'Distances', color:'#b84a2a'},
-  time:      {label:'Time', color:'#6a4a90'},
-  nature:    {label:'Nature & Space', color:'#c08030'},
+  all:      {label:'Everything',  color:'#6a5c3a'},
+  animals:  {label:'Animals & Life', color:'#1a5a2a'},
+  people:   {label:'People',      color:'#0a6a5a'},
+  distance: {label:'Distances',   color:'#a02020'},
+  time:     {label:'Time',        color:'#5a1a6a'},
+  nature:   {label:'Nature & Space', color:'#c47a0a'},
 };
 
-const ENTRIES = [
-  {exp:0,  cat:'animals',  emoji:'🦏', title:'Northern white rhinos',    val:'2 = 2 × 10⁰',       detail:'Only 2 remain — both female — at Ol Pejeta Conservancy, Kenya. Functionally extinct in the wild.'},
-  {exp:1,  cat:'animals',  emoji:'🐒', title:'Hainan gibbons',           val:'~42 ≈ 4 × 10¹',      detail:'The rarest ape on Earth. Confined to one forest reserve on Hainan island, China.'},
-  {exp:2,  cat:'animals',  emoji:'🦜', title:'Kakapos (flightless parrot)',val:'242 ≈ 2 × 10²',     detail:'Conservation grew numbers from just 51 in 1995. All individuals are named and tracked.'},
-  {exp:3,  cat:'animals',  emoji:'🦎', title:'Komodo dragons',           val:'<3,000 ≈ 3 × 10³',   detail:'World\'s largest lizard. All live in Indonesia. Listed as Endangered by the IUCN.'},
-  {exp:4,  cat:'animals',  emoji:'🐺', title:'Maned wolves',             val:'17,000 ≈ 1.7 × 10⁴', detail:'South America\'s tallest wild canid. Most live in Brazil\'s cerrado grasslands.'},
-  {exp:5,  cat:'animals',  emoji:'🐘', title:'African elephants',        val:'415,000 ≈ 4 × 10⁵',  detail:'Numbers halved between 1979–1989 due to poaching. Now slowly recovering.'},
-  {exp:6,  cat:'animals',  emoji:'🐊', title:'American alligators',      val:'5 million = 5 × 10⁶', detail:'Once endangered. Now recovered to 5 million, a conservation success story.'},
-  {exp:7,  cat:'animals',  emoji:'🐪', title:'Camels worldwide',         val:'35 million ≈ 3.5 × 10⁷',detail:'Most are in Africa and Asia. India has about 2.5 lakh — just 0.7% of the world total.'},
-  {exp:8,  cat:'animals',  emoji:'🦬', title:'Water buffaloes',          val:'200 million = 2 × 10⁸',detail:'Over 97% live in Asia. India has the world\'s largest population.'},
-  {exp:9,  cat:'people',   emoji:'👥', title:'World human population',   val:'8.2 billion = 8.2 × 10⁹',detail:'Took 300,000 years to reach 1 billion (1800). Reached 8 billion in 2022.'},
-  {exp:10, cat:'animals',  emoji:'🐔', title:'Chickens alive right now', val:'33 billion ≈ 3.3 × 10¹⁰',detail:'4 chickens for every human. More chickens alive at any moment than any other bird.'},
-  {exp:11, cat:'distance', emoji:'☀️', title:'Earth to Sun',            val:'1.496 × 10¹¹ m',       detail:'One Astronomical Unit (AU). Light takes 8 minutes 20 seconds to cover this distance.'},
-  {exp:12, cat:'animals',  emoji:'🌳', title:'Trees on Earth',           val:'3 trillion = 3 × 10¹²', detail:'~400 trees per person. Being lost at about 15 billion per year to deforestation.'},
-  {exp:12, cat:'distance', emoji:'🪐', title:'Sun to Saturn',           val:'1.4 × 10¹² m',          detail:'About 9.5 AU. Saturn\'s famous rings span about 280,000 km.'},
-  {exp:14, cat:'animals',  emoji:'🦟', title:'Mosquitoes on Earth',     val:'110 trillion ≈ 10¹⁴',   detail:'The most dangerous animal to humans. Found on every continent except Antarctica.'},
-  {exp:15, cat:'time',     emoji:'⛰️', title:'Age of Himalayas (in sec)',val:'1.7 × 10¹⁵ s ≈ 55 Myr',detail:'The Himalayas formed when the Indian Plate collided with Asia. Still growing ~5 mm/year.'},
-  {exp:16, cat:'animals',  emoji:'🐜', title:'Ants on Earth',           val:'20 quadrillion = 2 × 10¹⁶',detail:'Ants alone outweigh all wild birds and wild mammals combined. 2.5 million per human.'},
-  {exp:17, cat:'time',     emoji:'🌍', title:'Age of Earth (in sec)',    val:'1.4 × 10¹⁷ s ≈ 4.5 Gyr',detail:'Earth formed from gas and dust around the young Sun, about 4.5 billion years ago.'},
-  {exp:17, cat:'time',     emoji:'🌌', title:'Age of Milky Way (in sec)',val:'4.3 × 10¹⁷ s ≈ 13.6 Gyr',detail:'Our galaxy formed just 200 million years after the Big Bang, 13.6 billion years ago.'},
-  {exp:21, cat:'nature',   emoji:'🏖️', title:'Grains of sand (beaches+deserts)',val:'≈ 10²¹',      detail:'More grains of sand than stars in the observable universe — but not more than atoms in a teaspoon of water.'},
-  {exp:23, cat:'nature',   emoji:'⭐', title:'Stars in observable universe',val:'2 × 10²³',          detail:'About 200 sextillion stars. Our Milky Way alone has ~100 billion (10¹¹) of them.'},
+const ENTRIES=[
+  {exp:0, cat:'animals',  emoji:'🦏',title:'Northern white rhinos',val:'2 = 2×10⁰',detail:'Only 2 remain — both female — at Ol Pejeta, Kenya. Functionally extinct in the wild.'},
+  {exp:1, cat:'animals',  emoji:'🐒',title:'Hainan gibbons',val:'~42 ≈ 4×10¹',detail:'The rarest ape on Earth. Confined to one forest reserve on Hainan island, China.'},
+  {exp:2, cat:'animals',  emoji:'🦜',title:'Kakapos',val:'242 ≈ 2×10²',detail:'The rarest flightless parrot. Conservation grew numbers from just 51 in 1995.'},
+  {exp:3, cat:'animals',  emoji:'🦎',title:'Komodo dragons',val:'<3,000 ≈ 3×10³',detail:"World's largest lizard. All live in Indonesia. Listed Endangered by IUCN."},
+  {exp:4, cat:'animals',  emoji:'🐺',title:'Maned wolves',val:'17,000 ≈ 1.7×10⁴',detail:"South America's tallest wild canid. Most live in Brazil's cerrado grasslands."},
+  {exp:5, cat:'animals',  emoji:'🐘',title:'African elephants',val:'415,000 ≈ 4×10⁵',detail:'Numbers halved 1979–1989 due to poaching. Now slowly recovering.'},
+  {exp:6, cat:'animals',  emoji:'🐊',title:'American alligators',val:'5 million = 5×10⁶',detail:'Once endangered. Now recovered to 5 million — a conservation success story.'},
+  {exp:7, cat:'animals',  emoji:'🐪',title:'Camels worldwide',val:'35 million ≈ 3.5×10⁷',detail:'Most in Africa and Asia. India has about 2.5 lakh — 0.7% of the world total.'},
+  {exp:8, cat:'animals',  emoji:'🦬',title:'Water buffaloes',val:'200 million = 2×10⁸',detail:"Over 97% live in Asia. India has the world's largest population."},
+  {exp:9, cat:'people',   emoji:'👥',title:'World human population',val:'8.2 billion = 8.2×10⁹',detail:'Took 300,000 years to reach 1 billion (1800). Reached 8 billion in 2022.'},
+  {exp:10,cat:'animals',  emoji:'🐔',title:'Chickens alive right now',val:'33 billion ≈ 3.3×10¹⁰',detail:'4 chickens for every human. More chickens alive at any moment than any other bird.'},
+  {exp:11,cat:'distance', emoji:'☀️',title:'Earth to Sun',val:'1.496×10¹¹ m',detail:'One Astronomical Unit (AU). Light takes 8 minutes 20 seconds to cover this.'},
+  {exp:12,cat:'animals',  emoji:'🌳',title:'Trees on Earth',val:'3 trillion = 3×10¹²',detail:'~400 trees per person. Being lost at about 15 billion per year to deforestation.'},
+  {exp:12,cat:'distance', emoji:'🪐',title:'Sun to Saturn',val:'1.4×10¹² m',detail:"About 9.5 AU. Saturn's famous rings span about 280,000 km."},
+  {exp:14,cat:'animals',  emoji:'🦟',title:'Mosquitoes on Earth',val:'110 trillion ≈ 10¹⁴',detail:'The most dangerous animal to humans. Found on every continent except Antarctica.'},
+  {exp:15,cat:'time',     emoji:'⛰️',title:'Age of Himalayas (sec)',val:'1.7×10¹⁵ s ≈ 55 Myr',detail:'Formed when the Indian Plate collided with Asia. Still growing ~5 mm/year.'},
+  {exp:16,cat:'animals',  emoji:'🐜',title:'Ants on Earth',val:'20 quadrillion = 2×10¹⁶',detail:'Ants alone outweigh all wild birds and wild mammals combined.'},
+  {exp:17,cat:'time',     emoji:'🌍',title:'Age of Earth (sec)',val:'1.4×10¹⁷ s ≈ 4.5 Gyr',detail:'Earth formed from gas and dust around the young Sun, about 4.5 billion years ago.'},
+  {exp:17,cat:'time',     emoji:'🌌',title:'Age of Milky Way (sec)',val:'4.3×10¹⁷ s ≈ 13.6 Gyr',detail:'Our galaxy formed just 200 million years after the Big Bang.'},
+  {exp:21,cat:'nature',   emoji:'🏖️',title:'Grains of sand (beaches)',val:'≈ 10²¹',detail:'More grains of sand than stars in the observable universe.'},
+  {exp:23,cat:'nature',   emoji:'⭐',title:'Stars in observable universe',val:'2×10²³',detail:'About 200 sextillion stars. Our Milky Way alone has ~100 billion of them.'},
 ];
 
-// ══════════════════════════════════════════════
-// STATE
-// ══════════════════════════════════════════════
-let activeCat = 'all';
-let zoomLo = 0, zoomHi = 23;
-let selectedEntry = null;
-let lastSelectedEntry = null;
-let hitAreas = []; // {entry, x, y, w, h}
+function sup(n){return String(n).split('').map(c=>({'−':'⁻','-':'⁻','0':'⁰','1':'¹','2':'²','3':'³','4':'⁴','5':'⁵','6':'⁶','7':'⁷','8':'⁸','9':'⁹'}[c]||c)).join('')}
 
-// ══════════════════════════════════════════════
-// HELPERS
-// ══════════════════════════════════════════════
-function sup(n){
-  return String(n).split('').map(c=>({'−':'⁻','-':'⁻','0':'⁰','1':'¹','2':'²','3':'³','4':'⁴','5':'⁵','6':'⁶','7':'⁷','8':'⁸','9':'⁹'}[c]||c)).join('');
-}
+// Category palette — warm earth tones
+const CAT_COLORS={
+  animals:  {stroke:'#1a5a2a',fill:'rgba(26,90,42,.08)',dot:'#1a5a2a'},
+  people:   {stroke:'#0a6a5a',fill:'rgba(10,106,90,.08)',dot:'#0a6a5a'},
+  distance: {stroke:'#a02020',fill:'rgba(160,32,32,.08)',dot:'#a02020'},
+  time:     {stroke:'#5a1a6a',fill:'rgba(90,26,106,.08)',dot:'#5a1a6a'},
+  nature:   {stroke:'#c47a0a',fill:'rgba(196,122,10,.08)',dot:'#c47a0a'},
+};
 
-// Map exponent to a warm colour: teal→sage→gold→rust
-function expColor(e){
-  // 0–7: teal range, 8–14: sage→gold, 15–23: gold→rust
-  if(e <= 7){
-    const t = e/7;
-    const r=Math.round(29+t*(58-29)), g=Math.round(106+t*(106-106)), b=Math.round(114+t*(72-114));
-    return `rgb(${r},${g},${b})`;
-  } else if(e <= 14){
-    const t=(e-8)/6;
-    const r=Math.round(42+t*(192-42)), g=Math.round(122+t*(128-122)), b=Math.round(72+t*(48-72));
-    return `rgb(${r},${g},${b})`;
-  } else {
-    const t=(e-15)/8;
-    const r=Math.round(160+t*(184-160)), g=Math.round(80+t*(74-80)), b=Math.round(48+t*(42-48));
-    return `rgb(${r},${g},${b})`;
-  }
-}
+let activeCat='all',zlo=0,zhi=23;
+let selectedEntry=null,lastSelected=null;
+let hitAreas=[];
+const PR=Math.min(window.devicePixelRatio||1,2);
+const cvs=document.getElementById('scale-cvs');
+const ctx=cvs.getContext('2d');
 
-// ══════════════════════════════════════════════
-// CATEGORY BUTTONS
-// ══════════════════════════════════════════════
-function buildCatBtns(){
-  const container = document.getElementById('cat-btns');
-  container.innerHTML = '';
-  Object.entries(CATS).forEach(([key, cfg]) => {
-    const btn = document.createElement('button');
-    btn.className = 'cat-btn' + (activeCat === key ? ' active' : '');
-    if(activeCat === key) btn.style.background = cfg.color;
-    btn.innerHTML = `<div class="cat-dot" style="background:${key==='all'?'var(--ink3)':cfg.color}${activeCat===key?'':'88'}"></div>${cfg.label}`;
-    btn.addEventListener('click', () => {
-      activeCat = key;
-      buildCatBtns();
-      drawScale();
-    });
-    container.appendChild(btn);
+function buildCats(){
+  const cont=document.getElementById('cat-list');
+  cont.innerHTML='';
+  Object.entries(CATS).forEach(([key,cfg])=>{
+    const btn=document.createElement('button');
+    btn.className='cat-btn'+(activeCat===key?' active':'');
+    btn.innerHTML=`<div class="cat-dot" style="background:${key==='all'?'var(--ink4)':cfg.color}"></div>${cfg.label}`;
+    btn.addEventListener('click',()=>{activeCat=key;buildCats();drawScale();});
+    cont.appendChild(btn);
   });
 }
-
-// ══════════════════════════════════════════════
-// DRAW
-// ══════════════════════════════════════════════
-const canvas = document.getElementById('scale-canvas');
-const ctx    = canvas.getContext('2d');
-const PR     = Math.min(window.devicePixelRatio || 1, 2);
 
 function drawScale(){
-  const wrap   = canvas.parentElement;
-  const W      = wrap.clientWidth;
-  const range  = zoomHi - zoomLo;
+  const wrap=cvs.parentElement;
+  const W=wrap.clientWidth;
+  const range=zhi-zlo;
+  const PPE=Math.max(36,Math.min(72,720/range));
+  const H=Math.max(500,range*PPE+100);
+  cvs.style.width=W+'px';cvs.style.height=H+'px';
+  cvs.width=W*PR;cvs.height=H*PR;
+  ctx.resetTransform();ctx.scale(PR,PR);
+  const PT=28,PB=28,PL=112,PRA=16;
+  const dH=H-PT-PB;
+  hitAreas=[];
 
-  // Height: 60px per exponent unit in zoom range, minimum 500px
-  const PX_PER_EXP = Math.max(36, Math.min(70, 700 / range));
-  const H = Math.max(500, range * PX_PER_EXP + 100);
+  // Parchment background with subtle banding
+  ctx.fillStyle='#f9f5ed';
+  ctx.fillRect(0,0,W,H);
 
-  canvas.style.width  = W + 'px';
-  canvas.style.height = H + 'px';
-  canvas.width  = W * PR;
-  canvas.height = H * PR;
-  ctx.resetTransform();
-  ctx.scale(PR, PR);
-
-  // Background
-  ctx.fillStyle = '#fff';
-  ctx.fillRect(0, 0, W, H);
-
-  const PAD_TOP    = 30;
-  const PAD_BOT    = 30;
-  const AXIS_X     = 110; // x position of the vertical axis line
-  const drawH      = H - PAD_TOP - PAD_BOT;
-
-  hitAreas = [];
-
-  // Map exponent → y position
-  function expToY(e){
-    const t = (e - zoomLo) / range;
-    return PAD_TOP + t * drawH;
+  // Alternating bands
+  for(let e=zlo;e<zhi;e++){
+    const y1=eY(e,H,PT,PB,dH),y2=eY(e+1,H,PT,PB,dH);
+    if(e%2===0){ctx.fillStyle='rgba(232,219,192,.35)';ctx.fillRect(PL,y1,W-PL-PRA,y2-y1);}
   }
 
-  // Draw background bands (alternating)
-  for(let e = zoomLo; e < zoomHi; e++){
-    const y1 = expToY(e);
-    const y2 = expToY(e+1);
-    if(e % 2 === 0){
-      ctx.fillStyle = 'rgba(243,240,234,.5)';
-      ctx.fillRect(0, y1, W, y2-y1);
+  // Grid lines + exponent labels
+  for(let e=zlo;e<=zhi;e++){
+    const y=eY(e,H,PT,PB,dH);
+    const major=e%3===0;
+    ctx.strokeStyle=major?'rgba(100,90,70,.3)':'rgba(100,90,70,.12)';
+    ctx.lineWidth=major?1:0.5;ctx.setLineDash(major?[]:[2,3]);
+    ctx.beginPath();ctx.moveTo(PL,y);ctx.lineTo(W-PRA,y);ctx.stroke();ctx.setLineDash([]);
+    // ×10 annotation between lines when zoomed in
+    if(e<zhi&&range<=12){
+      const midY=(y+eY(e+1,H,PT,PB,dH))/2;
+      ctx.font='italic 10px Instrument Serif, serif';
+      ctx.fillStyle='rgba(120,110,80,.4)';ctx.textAlign='center';ctx.textBaseline='middle';
+      ctx.fillText('× 10',PL-24,midY);
     }
+    // Exponent label
+    ctx.font=`${major?'bold ':''} 11px Space Mono,monospace`;
+    ctx.fillStyle=major?'rgba(28,22,8,.75)':'rgba(28,22,8,.4)';
+    ctx.textAlign='right';ctx.textBaseline='middle';
+    ctx.fillText('10'+sup(e),PL-5,y);
+    // tick
+    ctx.strokeStyle='rgba(100,90,70,.5)';ctx.lineWidth=1.5;ctx.setLineDash([]);
+    ctx.beginPath();ctx.moveTo(PL-4,y);ctx.lineTo(PL+4,y);ctx.stroke();
   }
 
-  // Gridlines + exponent labels
-  for(let e = zoomLo; e <= zoomHi; e++){
-    const y = expToY(e);
-
-    // Major gridline
-    ctx.strokeStyle = e % 3 === 0 ? '#c8c0b8' : '#e0dbd4';
-    ctx.lineWidth   = e % 3 === 0 ? 1.5 : 0.8;
-    ctx.setLineDash(e % 3 === 0 ? [] : [3,3]);
-    ctx.beginPath();
-    ctx.moveTo(AXIS_X, y);
-    ctx.lineTo(W, y);
-    ctx.stroke();
-    ctx.setLineDash([]);
-
-    // Exponent label (left side)
-    ctx.font      = `bold 11px DM Mono, monospace`;
-    ctx.fillStyle = e % 3 === 0 ? '#4a4640' : '#9a9590';
-    ctx.textAlign = 'right';
-    ctx.textBaseline = 'middle';
-    ctx.fillText(`10${sup(e)}`, AXIS_X - 10, y);
-  }
-
-  // The axis line itself
-  ctx.strokeStyle = '#c8c0b8';
-  ctx.lineWidth   = 2.5;
-  ctx.setLineDash([]);
-  ctx.beginPath();
-  ctx.moveTo(AXIS_X, PAD_TOP);
-  ctx.lineTo(AXIS_X, PAD_TOP + drawH);
-  ctx.stroke();
-
-  // Axis ticks
-  for(let e = zoomLo; e <= zoomHi; e++){
-    const y = expToY(e);
-    ctx.strokeStyle = '#9a9590';
-    ctx.lineWidth = 1.5;
-    ctx.beginPath();
-    ctx.moveTo(AXIS_X - 5, y);
-    ctx.lineTo(AXIS_X + 5, y);
-    ctx.stroke();
-  }
+  // Axis line
+  ctx.strokeStyle='rgba(28,22,8,.5)';ctx.lineWidth=2;
+  ctx.beginPath();ctx.moveTo(PL,PT);ctx.lineTo(PL,PT+dH);ctx.stroke();
 
   // ENTRIES
-  const filtered = ENTRIES.filter(entry =>
-    activeCat === 'all' || entry.cat === activeCat
-  ).filter(entry =>
-    entry.exp >= zoomLo && entry.exp <= zoomHi
-  );
+  const filtered=ENTRIES.filter(en=>(activeCat==='all'||en.cat===activeCat)&&en.exp>=zlo&&en.exp<=zhi);
+  const byExp={};
+  filtered.forEach(en=>{if(!byExp[en.exp])byExp[en.exp]=[];byExp[en.exp].push(en);});
 
-  // Group by exponent to stagger horizontally
-  const byExp = {};
-  filtered.forEach(entry => {
-    if(!byExp[entry.exp]) byExp[entry.exp] = [];
-    byExp[entry.exp].push(entry);
-  });
+  const EH=28,SX=PL+18;
+  Object.entries(byExp).forEach(([es,entries])=>{
+    const e=+es;
+    const y=eY(e,H,PT,PB,dH);
+    const catCfg=CAT_COLORS[entries[0].cat]||{stroke:'rgba(100,90,70,.6)',fill:'rgba(100,90,70,.06)',dot:'rgba(100,90,70,.6)'};
+    entries.forEach((en,si)=>{
+      const isSel=en===selectedEntry;
+      const isy=y+si*(EH+4)-((entries.length-1)*(EH+4))/2;
+      const col=catCfg.stroke;
+      const alphaBase=isSel?1:.7;
 
-  const DOT_R    = 9;
-  const ENTRY_H  = 26;
-  const START_X  = AXIS_X + 20;
+      // connector dot on axis
+      ctx.beginPath();ctx.arc(PL,isy,isSel?9:6,0,Math.PI*2);
+      ctx.fillStyle=isSel?col:'rgba(100,90,70,.25)';ctx.fill();
+      if(isSel){ctx.strokeStyle='var(--parch2)';ctx.lineWidth=2;ctx.stroke();}
 
-  Object.entries(byExp).forEach(([expStr, entries]) => {
-    const e   = +expStr;
-    const y   = expToY(e);
-    const col = expColor(e);
-    const isSel = entries.some(en => en === selectedEntry);
+      // horizontal connector
+      ctx.strokeStyle=isSel?col:col.replace(/rgba\(([^)]+)\)/,'rgba($1,.35)');
+      ctx.lineWidth=isSel?1.5:0.8;
+      ctx.beginPath();ctx.moveTo(PL,isy);ctx.lineTo(SX,isy);ctx.stroke();
 
-    entries.forEach((entry, slotIdx) => {
-      const isSel = entry === selectedEntry;
-      const entryY = y + slotIdx * (ENTRY_H + 4) - (entries.length - 1) * (ENTRY_H + 4) / 2;
+      // emoji
+      ctx.globalAlpha=alphaBase;
+      ctx.font='16px serif';ctx.textAlign='left';ctx.textBaseline='middle';
+      ctx.fillText(en.emoji,SX,isy);
 
-      // Connector line from axis dot to label
-      ctx.strokeStyle = isSel ? col : col + '60';
-      ctx.lineWidth   = isSel ? 2 : 1;
-      ctx.beginPath();
-      ctx.moveTo(AXIS_X, entryY);
-      ctx.lineTo(START_X + DOT_R, entryY);
-      ctx.stroke();
+      // title
+      ctx.globalAlpha=1;
+      ctx.font=isSel?'bold 12px Space Mono,monospace':'11px Space Mono,monospace';
+      ctx.fillStyle=isSel?'rgba(28,22,8,.95)':'rgba(28,22,8,.65)';
+      ctx.textAlign='left';ctx.textBaseline='middle';
+      const maxW=W-SX-30-20;
+      let title=en.title;
+      while(ctx.measureText(title).width>maxW&&title.length>6)title=title.slice(0,-4)+'…';
+      ctx.fillText(title,SX+20,isy-5);
 
-      // Axis dot
-      ctx.beginPath();
-      ctx.arc(AXIS_X, entryY, isSel ? DOT_R : 6, 0, Math.PI*2);
-      ctx.fillStyle = isSel ? col : col + 'aa';
-      ctx.fill();
+      // value
+      ctx.font='9px Space Mono,monospace';
+      ctx.fillStyle=isSel?col:'rgba(100,90,70,.55)';
+      ctx.fillText(en.val,SX+20,isy+7);
+
+      // selected: glow line
       if(isSel){
-        ctx.strokeStyle = '#fff';
-        ctx.lineWidth = 2;
-        ctx.stroke();
+        ctx.strokeStyle=col.replace(/rgba?\([^)]+\)/,c=>c)+'+40';
+        const gGrad=ctx.createLinearGradient(PL,0,SX+200,0);
+        gGrad.addColorStop(0,'transparent');gGrad.addColorStop(.3,col+'55');gGrad.addColorStop(1,'transparent');
+        ctx.fillStyle=gGrad;
+        ctx.fillRect(PL,isy-EH/2,Math.min(W-PL,240),EH);
       }
 
-      // Label pill background
-      const labelX   = START_X + DOT_R * 2 + 6;
-      const emojiW   = 22;
-      const textW    = Math.min(W - labelX - emojiW - 30, 300);
-
-      // Draw emoji
-      ctx.font = `${ENTRY_H * 0.75}px serif`;
-      ctx.textAlign = 'left';
-      ctx.textBaseline = 'middle';
-      ctx.fillText(entry.emoji, labelX, entryY);
-
-      // Draw title
-      ctx.font = isSel
-        ? `bold 13px DM Sans, sans-serif`
-        : `600 12px DM Sans, sans-serif`;
-      ctx.fillStyle = isSel ? '#1c1a16' : '#4a4640';
-      ctx.textAlign = 'left';
-      ctx.textBaseline = 'middle';
-      // Clip title to available width
-      let title = entry.title;
-      while(ctx.measureText(title).width > textW - emojiW - 10 && title.length > 10){
-        title = title.slice(0, -4) + '…';
-      }
-      ctx.fillText(title, labelX + emojiW + 4, entryY - 1);
-
-      // Value below title
-      ctx.font = `500 10px DM Mono, monospace`;
-      ctx.fillStyle = isSel ? col : '#8a8580';
-      ctx.fillText(entry.val, labelX + emojiW + 4, entryY + 10);
-
-      // Hit area
-      const hitW = Math.min(W - labelX, 400);
-      hitAreas.push({entry, x: AXIS_X - DOT_R, y: entryY - ENTRY_H/2, w: hitW + DOT_R + 20, h: ENTRY_H});
-
-      // Selected: highlight glow
-      if(isSel){
-        ctx.strokeStyle = col + '40';
-        ctx.lineWidth = 12;
-        ctx.setLineDash([]);
-        ctx.beginPath();
-        ctx.moveTo(AXIS_X, entryY);
-        ctx.lineTo(labelX + emojiW + 4 + Math.min(ctx.measureText(title).width, textW), entryY);
-        ctx.stroke();
-      }
+      hitAreas.push({en,x:PL-12,y:isy-EH/2,w:Math.min(W-PL,320),h:EH});
     });
   });
 
-  // "×10" annotations between major ticks (left side)
-  if(range <= 10){
-    for(let e = zoomLo; e < zoomHi; e++){
-      const y1 = expToY(e);
-      const y2 = expToY(e+1);
-      const midY = (y1+y2)/2;
-      ctx.font = '9px DM Sans, sans-serif';
-      ctx.fillStyle = '#c0bab4';
-      ctx.textAlign = 'right';
-      ctx.textBaseline = 'middle';
-      ctx.fillText('×10', AXIS_X - 14, midY);
-    }
-  }
+  document.getElementById('tr-val').textContent='10'+sup(zlo)+' — 10'+sup(zhi);
 }
 
-// ══════════════════════════════════════════════
-// CLICK HANDLER
-// ══════════════════════════════════════════════
-canvas.addEventListener('click', e => {
-  const rect = canvas.getBoundingClientRect();
-  const mx   = e.clientX - rect.left;
-  const my   = e.clientY - rect.top;
-  let hit    = null;
-  for(const area of hitAreas){
-    if(mx >= area.x && mx <= area.x + area.w && my >= area.y && my <= area.y + area.h){
-      hit = area.entry;
-      break;
-    }
-  }
-  if(hit === selectedEntry){ selectedEntry = null; }
-  else selectedEntry = hit;
-  drawScale();
-  updateSelPanel();
+function eY(e,H,PT,PB,dH){
+  const range=zhi-zlo,t=(e-zlo)/range;
+  return PT+t*dH;
+}
+
+cvs.addEventListener('click',e=>{
+  const r=cvs.getBoundingClientRect(),mx=e.clientX-r.left,my=e.clientY-r.top;
+  let hit=null;
+  for(const a of hitAreas){if(mx>=a.x&&mx<=a.x+a.w&&my>=a.y&&my<=a.y+a.h){hit=a.en;break;}}
+  if(hit===selectedEntry){selectedEntry=null;}
+  else{lastSelected=selectedEntry;selectedEntry=hit;}
+  drawScale();updateSel();
 });
 
-function updateSelPanel(){
-  const card = document.getElementById('sel-card');
-  const cmp  = document.getElementById('cmp-strip');
-
+function updateSel(){
+  const card=document.getElementById('sel-card');
+  const cmp=document.getElementById('cmp-strip');
   if(!selectedEntry){
-    card.innerHTML = '<div class="sel-empty">Click any marker on the scale →</div>';
-    cmp.style.display = 'none';
-    lastSelectedEntry = null;
-    return;
+    card.innerHTML='<div class="sel-empty">Click any marker on the scale →</div>';
+    cmp.classList.remove('show');lastSelected=null;return;
   }
-
-  const col = expColor(selectedEntry.exp);
-  card.innerHTML = `
+  const col=CAT_COLORS[selectedEntry.cat]?.stroke||'var(--ochre)';
+  card.innerHTML=`
     <div class="sel-exp" style="color:${col}">10${sup(selectedEntry.exp)}</div>
     <div class="sel-title">${selectedEntry.emoji} ${selectedEntry.title}</div>
     <div class="sel-val">${selectedEntry.val}</div>
     <div class="sel-detail">${selectedEntry.detail}</div>
   `;
-
-  // Compare with previous selection
-  if(lastSelectedEntry && lastSelectedEntry !== selectedEntry){
-    const a = lastSelectedEntry, b = selectedEntry;
-    const diff = Math.abs(b.exp - a.exp);
-    const factor = Math.pow(10, diff);
-    const factorStr = diff >= 6 ? factor.toExponential(0) : factor.toLocaleString('en-IN');
-    const bigger = b.exp > a.exp ? b : a;
-    const smaller = b.exp > a.exp ? a : b;
-    cmp.style.display = 'block';
-    document.getElementById('cmp-row').innerHTML =
-      `<div>${bigger.emoji} <strong>${bigger.title}</strong> (10${sup(bigger.exp)})</div>
-       <div style="color:var(--teal)">is <span class="cmp-big">${factorStr}×</span> larger than</div>
-       <div>${smaller.emoji} <strong>${smaller.title}</strong> (10${sup(smaller.exp)})</div>
-       <div style="margin-top:4px;font-size:11px;color:var(--ink3)">That's a difference of 10${sup(diff)} = ${factorStr}</div>`;
-  } else {
-    cmp.style.display = 'none';
-  }
-
-  lastSelectedEntry = selectedEntry;
+  if(lastSelected&&lastSelected!==selectedEntry){
+    const big=selectedEntry.exp>=lastSelected.exp?selectedEntry:lastSelected;
+    const small=selectedEntry.exp>=lastSelected.exp?lastSelected:selectedEntry;
+    const diff=big.exp-small.exp;
+    const factor=Math.pow(10,diff);
+    const fs=diff>=6?factor.toExponential(0):factor.toLocaleString('en-IN');
+    cmp.classList.add('show');
+    cmp.innerHTML=`${big.emoji} <strong>${big.title}</strong> (10${sup(big.exp)})<br>is <span class="cmp-big">${fs}×</span> larger than<br>${small.emoji} <strong>${small.title}</strong> (10${sup(small.exp)})<br><span style="font-size:9px;color:var(--ink4)">exponent difference: 10${sup(diff)} = ${fs}</span>`;
+  } else cmp.classList.remove('show');
 }
 
-// ══════════════════════════════════════════════
-// ZOOM
-// ══════════════════════════════════════════════
-function updateZoomLabels(){
-  document.getElementById('zoom-lo-val').textContent = `10${sup(zoomLo)}`;
-  document.getElementById('zoom-hi-val').textContent = `10${sup(zoomHi)}`;
-}
-
-document.getElementById('zoom-lo').addEventListener('input', e => {
-  zoomLo = Math.min(+e.target.value, zoomHi - 1);
-  e.target.value = zoomLo;
-  updateZoomLabels();
-  drawScale();
+document.getElementById('zlo').addEventListener('input',e=>{
+  zlo=Math.min(+e.target.value,zhi-1);e.target.value=zlo;
+  document.getElementById('zlo-v').textContent='10'+sup(zlo);drawScale();
 });
-document.getElementById('zoom-hi').addEventListener('input', e => {
-  zoomHi = Math.max(+e.target.value, zoomLo + 1);
-  e.target.value = zoomHi;
-  updateZoomLabels();
-  drawScale();
+document.getElementById('zhi').addEventListener('input',e=>{
+  zhi=Math.max(+e.target.value,zlo+1);e.target.value=zhi;
+  document.getElementById('zhi-v').textContent='10'+sup(zhi);drawScale();
 });
 
-// ══════════════════════════════════════════════
-// RESIZE
-// ══════════════════════════════════════════════
-let resizeTimer;
-new ResizeObserver(()=>{
-  clearTimeout(resizeTimer);
-  resizeTimer = setTimeout(drawScale, 80);
-}).observe(canvas.parentElement);
-
-// ══════════════════════════════════════════════
-// INIT
-// ══════════════════════════════════════════════
-buildCatBtns();
-updateZoomLabels();
-drawScale();
+let rt;new ResizeObserver(()=>{clearTimeout(rt);rt=setTimeout(drawScale,80);}).observe(cvs.parentElement);
+buildCats();drawScale();
 </script>
 </body>
 </html>
