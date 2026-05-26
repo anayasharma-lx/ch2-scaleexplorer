@@ -3,468 +3,173 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-<title>Scale Explorer — Ganita Prakash Grade 8</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
+<title>Scale Explorer</title>
 <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-:root{
-  --parch:#f9f5ed;
-  --parch2:#f2ead8;
-  --parch3:#e8dfc8;
-  --parch4:#d8cdb0;
-  --ink:#1c1608;
-  --ink2:#3a3020;
-  --ink3:#6a5c3a;
-  --ink4:#9a8c6a;
-  --rule:#c8bda0;
-  --rule2:#e0d5be;
-  --ochre:#c47a0a;
-  --ochre2:#e09a18;
-  --ochre-bg:rgba(196,122,10,.1);
-  --crimson:#a02020;
-  --teal:#0a6a5a;
-  --forest:#1a5a2a;
-  --plum:#5a1a6a;
-  --navy:#1a2a6a;
-  --serif:'Instrument Serif',Georgia,serif;
-  --mono:'Space Mono',ui-monospace,monospace;
-}
+:root{--parch:#f9f5ed;--parch2:#f2ead8;--parch3:#e8dfc8;--ink:#1c1608;--ink3:#6a5c3a;--ink4:#9a8c6a;--rule:#c8bda0;--rule2:#e0d5be;--ochre:#c47a0a;--serif:'Instrument Serif',Georgia,serif;--mono:'Space Mono',ui-monospace,monospace;}
 html,body{width:100%;height:100%;overflow:hidden}
-body{
-  font-family:var(--serif);
-  background:var(--parch);
-  color:var(--ink);
-  -webkit-font-smoothing:antialiased;
-  display:flex;flex-direction:column;
-  position:fixed;inset:0;
-}
-
-/* aged paper texture overlay */
-body::before{
-  content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
-  background-image:
-    repeating-linear-gradient(
-      0deg,
-      transparent,transparent 18px,
-      rgba(160,140,100,.07) 18px,rgba(160,140,100,.07) 19px
-    ),
-    repeating-linear-gradient(
-      90deg,
-      transparent,transparent 120px,
-      rgba(160,140,100,.03) 120px,rgba(160,140,100,.03) 121px
-    );
-}
-
-/* ── HEADER ── */
-.top{
-  position:relative;z-index:10;
-  border-bottom:2px solid var(--ink);
-  background:var(--parch2);
-  display:flex;align-items:stretch;
-  flex-shrink:0;
-}
-.top-left{
-  padding:10px 18px;border-right:1px solid var(--rule);
-  display:flex;flex-direction:column;justify-content:center;min-width:190px;
-}
-.top-chapter{font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--ink4);font-family:var(--mono);margin-bottom:2px}
+body{font-family:var(--serif);background:var(--parch);color:var(--ink);-webkit-font-smoothing:antialiased;display:flex;flex-direction:column;position:fixed;inset:0}
+body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;background-image:repeating-linear-gradient(0deg,transparent,transparent 18px,rgba(160,140,100,.07) 18px,rgba(160,140,100,.07) 19px)}
+.top{position:relative;z-index:10;border-bottom:2px solid var(--ink);background:var(--parch2);display:flex;align-items:stretch;flex-shrink:0}
+.top-left{padding:10px 18px;border-right:1px solid var(--rule);display:flex;flex-direction:column;justify-content:center;min-width:190px}
+.top-chapter{font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--ink4);font-family:var(--mono);margin-bottom:2px}
 .top-title{font-size:20px;font-weight:400;color:var(--ink);line-height:1.1}
 .top-center{flex:1;padding:10px 20px;display:flex;align-items:center}
-.top-concept{
-  font-style:italic;font-size:13px;color:var(--ink3);
-  border-left:2px solid var(--ochre);padding-left:12px;line-height:1.65;
-}
+.top-concept{font-style:italic;font-size:13px;color:var(--ink3);border-left:2px solid var(--ochre);padding-left:12px;line-height:1.65}
 .top-concept strong{color:var(--ochre);font-style:normal;font-family:var(--mono);font-size:11px}
-.top-right{
-  border-left:1px solid var(--rule);padding:10px 14px;
-  display:flex;flex-direction:column;justify-content:center;align-items:flex-end;
-  gap:2px;min-width:140px;
-}
-.tr-lbl{font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink4);font-family:var(--mono)}
+.top-right{border-left:1px solid var(--rule);padding:10px 14px;display:flex;flex-direction:column;justify-content:center;align-items:flex-end;gap:2px;min-width:140px}
+.tr-lbl{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink4);font-family:var(--mono)}
 .tr-val{font-size:14px;font-weight:700;color:var(--ink);font-family:var(--mono)}
-
-/* ── MAIN ── */
-.main{
-  flex:1;display:grid;
-  grid-template-columns:230px 1fr;
-  overflow:hidden;min-height:0;
-  position:relative;z-index:5;
-}
-
-/* ── LEFT ── */
-.left{
-  border-right:1px solid var(--rule);
-  display:flex;flex-direction:column;
-  background:var(--parch2);
-  overflow:hidden;
-}
-.lp{
-  padding:12px 14px;
-  border-bottom:1px solid var(--rule2);
-  flex-shrink:0;
-}
-.lp-lbl{
-  font-size:9px;letter-spacing:.18em;text-transform:uppercase;
-  color:var(--ink4);font-family:var(--mono);margin-bottom:8px;
-}
-
-/* category buttons */
+.main{flex:1;display:grid;grid-template-columns:230px 1fr;overflow:hidden;min-height:0;position:relative;z-index:5}
+.left{border-right:1px solid var(--rule);display:flex;flex-direction:column;background:var(--parch2);overflow:hidden}
+.lp{padding:12px 14px;border-bottom:1px solid var(--rule2);flex-shrink:0}
+.lp-lbl{font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink4);font-family:var(--mono);margin-bottom:8px}
 .cat-list{display:flex;flex-direction:column;gap:3px}
-.cat-btn{
-  display:flex;align-items:center;gap:8px;
-  padding:7px 10px;
-  border:1px solid var(--rule2);border-radius:0;
-  cursor:pointer;transition:all .14s;background:transparent;
-  font-family:var(--serif);font-size:13px;color:var(--ink3);
-  text-align:left;
-}
-.cat-btn:hover{border-color:var(--rule);background:var(--parch3)}
-.cat-btn.active{background:var(--ink);color:var(--parch);border-color:var(--ink)}
-.cat-btn.active .cat-dot{background:var(--parch)!important}
-.cat-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
-
-/* zoom */
-.zoom-box{display:flex;flex-direction:column;gap:8px}
-.zoom-row{display:flex;align-items:center;gap:8px}
-.zoom-row input[type=range]{
-  flex:1;height:3px;
-  -webkit-appearance:none;
-  background:var(--rule);border-radius:2px;outline:none;cursor:pointer;
-}
-.zoom-row input[type=range]::-webkit-slider-thumb{
-  -webkit-appearance:none;width:14px;height:14px;border-radius:50%;
-  background:var(--ink);cursor:pointer;
-}
+.cat-btn{display:flex;align-items:center;gap:8px;padding:7px 10px;border:1px solid var(--rule2);cursor:pointer;transition:all .14s;background:transparent;font-family:var(--serif);font-size:13px;color:var(--ink3);text-align:left}
+.cat-btn:hover{border-color:var(--rule);background:var(--parch3)}.cat-btn.active{background:var(--ink);color:var(--parch);border-color:var(--ink)}
+.cat-btn.active .cat-dot{background:var(--parch)!important}.cat-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.zoom-box{display:flex;flex-direction:column;gap:8px}.zoom-row{display:flex;align-items:center;gap:8px}
+.zoom-row input[type=range]{flex:1;height:3px;-webkit-appearance:none;background:var(--rule);border-radius:2px;outline:none;cursor:pointer}
+.zoom-row input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:14px;height:14px;border-radius:50%;background:var(--ink);cursor:pointer}
 .zoom-lbl{font-size:10px;color:var(--ink4);font-family:var(--mono);min-width:30px}
 .zoom-val{font-family:var(--mono);font-size:11px;font-weight:700;color:var(--ochre);min-width:42px;text-align:right}
 .zoom-hint{font-size:10px;color:var(--ink4);font-family:var(--mono);line-height:1.5}
-
-/* selected card */
-.sel-card{
-  padding:12px 14px;flex:1;overflow-y:auto;
-}
+.sel-card{padding:12px 14px;flex:1;overflow-y:auto}
 .sel-empty{font-style:italic;font-size:13px;color:var(--ink4)}
 .sel-exp{font-family:var(--mono);font-size:22px;font-weight:700;margin-bottom:3px}
 .sel-title{font-size:14px;font-weight:400;color:var(--ink);margin-bottom:2px}
 .sel-val{font-family:var(--mono);font-size:10px;color:var(--ink4);margin-bottom:8px}
 .sel-detail{font-size:12px;color:var(--ink3);font-style:italic;line-height:1.65}
-
-/* compare strip */
-.cmp-strip{
-  display:none;
-  padding:10px 14px;
-  background:var(--parch3);
-  border-top:1px solid var(--rule2);
-  font-size:11px;color:var(--ink3);
-  font-family:var(--mono);line-height:1.7;
-  flex-shrink:0;
-}
-.cmp-strip.show{display:block}
-.cmp-big{font-size:18px;font-weight:700;color:var(--ochre)}
-
-/* ── RIGHT ── */
-.right{
-  display:flex;flex-direction:column;
-  overflow:hidden;
-  background:var(--parch);
-}
-.scale-wrap{
-  flex:1;overflow-y:auto;overflow-x:hidden;
-  scrollbar-width:thin;scrollbar-color:var(--rule2) transparent;
-}
-.scale-wrap::-webkit-scrollbar{width:4px}
-.scale-wrap::-webkit-scrollbar-thumb{background:var(--rule2)}
+.cmp-strip{display:none;padding:10px 14px;background:var(--parch3);border-top:1px solid var(--rule2);font-size:11px;color:var(--ink3);font-family:var(--mono);line-height:1.7;flex-shrink:0}
+.cmp-strip.show{display:block}.cmp-big{font-size:18px;font-weight:700;color:var(--ochre)}
+.right{display:flex;flex-direction:column;overflow:hidden;background:var(--parch)}
+.scale-wrap{flex:1;overflow-y:auto;overflow-x:hidden;scrollbar-width:thin;scrollbar-color:var(--rule2) transparent}
+.scale-wrap::-webkit-scrollbar{width:4px}.scale-wrap::-webkit-scrollbar-thumb{background:var(--rule2)}
 #scale-cvs{display:block;width:100%}
-</style>
+
+/* ══ MOBILE ══ */
+@media(max-width:768px){
+  html,body{overflow:auto;height:auto}
+  body{position:static;display:flex;flex-direction:column;min-height:100dvh}
+  .top{height:auto;flex-wrap:wrap}
+  .top-left{padding:8px 14px;min-width:0;border-right:none}
+  .top-title{font-size:17px}
+  .top-center{padding:6px 14px;border-left:none;border-top:1px solid var(--rule);width:100%}
+  .top-concept{font-size:12px}
+  .top-right{border-left:none;border-top:1px solid var(--rule);padding:6px 14px;flex-direction:row;align-items:center;gap:8px}
+  .main{grid-template-columns:1fr}
+  .left{border-right:none;border-bottom:1px solid var(--rule);max-height:none;overflow:visible}
+  .lp{padding:10px 12px}
+  .cat-list{display:grid;grid-template-columns:1fr 1fr;gap:3px}
+  .cat-btn{font-size:12px;padding:6px 8px}
+  .zoom-hint{font-size:11px}
+  .sel-card{max-height:200px;overflow-y:auto}
+  .cmp-strip{font-size:11px}
+  .right{overflow:visible}
+  .scale-wrap{overflow-y:auto;min-height:400px}
+}
+@media(max-width:480px){
+  .top-title{font-size:15px}
+  .cat-btn{font-size:11px}
+  .top-concept{font-size:11px}
+}</style>
 </head>
 <body>
-
-<!-- HEADER -->
 <div class="top">
-  <div class="top-left">
-    <div class="top-chapter">Ch·02 · Power Play</div>
-    <div class="top-title">Scale Explorer</div>
-  </div>
-  <div class="top-center">
-    <div class="top-concept">
-      <strong>The logarithmic scale:</strong> each tick is 10× the last. Equal visual gaps hide <em>enormous</em> numerical jumps. Click any marker — see the comparison.
-    </div>
-  </div>
-  <div class="top-right">
-    <div class="tr-lbl">Viewing range</div>
-    <div class="tr-val" id="tr-val">10⁰ — 10²³</div>
-  </div>
+  <div class="top-left"><div class="top-chapter">Ch-02 Power Play</div><div class="top-title">Scale Explorer</div></div>
+  <div class="top-center"><div class="top-concept"><strong>Logarithmic scale:</strong> each tick is 10x the last. Equal gaps hide enormous jumps. Click any marker.</div></div>
+  <div class="top-right"><div class="tr-lbl">Viewing range</div><div class="tr-val" id="tr-val">10^0 to 10^23</div></div>
 </div>
-
-<!-- MAIN -->
 <div class="main">
-
-  <!-- LEFT -->
   <div class="left">
-    <div class="lp">
-      <div class="lp-lbl">Filter</div>
-      <div class="cat-list" id="cat-list"></div>
-    </div>
-
-    <div class="lp">
-      <div class="lp-lbl">Zoom range</div>
-      <div class="zoom-box">
-        <div class="zoom-row">
-          <span class="zoom-lbl">lo</span>
-          <input type="range" id="zlo" min="0" max="22" value="0">
-          <span class="zoom-val" id="zlo-v">10⁰</span>
-        </div>
-        <div class="zoom-row">
-          <span class="zoom-lbl">hi</span>
-          <input type="range" id="zhi" min="1" max="23" value="23">
-          <span class="zoom-val" id="zhi-v">10²³</span>
-        </div>
-        <div class="zoom-hint">Narrow to zoom into any section</div>
-      </div>
-    </div>
-
-    <div class="sel-card" id="sel-card">
-      <div class="sel-empty">Click any marker on the scale →</div>
-    </div>
-
+    <div class="lp"><div class="lp-lbl">Filter</div><div class="cat-list" id="cat-list"></div></div>
+    <div class="lp"><div class="lp-lbl">Zoom range</div><div class="zoom-box">
+      <div class="zoom-row"><span class="zoom-lbl">lo</span><input type="range" id="zlo" min="0" max="22" value="0"><span class="zoom-val" id="zlo-v">10^0</span></div>
+      <div class="zoom-row"><span class="zoom-lbl">hi</span><input type="range" id="zhi" min="1" max="23" value="23"><span class="zoom-val" id="zhi-v">10^23</span></div>
+      <div class="zoom-hint">Narrow to zoom into any section</div>
+    </div></div>
+    <div class="sel-card" id="sel-card"><div class="sel-empty">Click any marker on the scale</div></div>
     <div class="cmp-strip" id="cmp-strip"></div>
   </div>
-
-  <!-- RIGHT -->
-  <div class="right">
-    <div class="scale-wrap">
-      <canvas id="scale-cvs"></canvas>
-    </div>
-  </div>
-
+  <div class="right"><div class="scale-wrap"><canvas id="scale-cvs"></canvas></div></div>
 </div>
-
 <script>
-const CATS = {
-  all:      {label:'Everything',  color:'#6a5c3a'},
-  animals:  {label:'Animals & Life', color:'#1a5a2a'},
-  people:   {label:'People',      color:'#0a6a5a'},
-  distance: {label:'Distances',   color:'#a02020'},
-  time:     {label:'Time',        color:'#5a1a6a'},
-  nature:   {label:'Nature & Space', color:'#c47a0a'},
-};
-
+const CATS={all:{label:'Everything',color:'#6a5c3a'},animals:{label:'Animals & Life',color:'#1a5a2a'},people:{label:'People',color:'#0a6a5a'},distance:{label:'Distances',color:'#a02020'},time:{label:'Time',color:'#5a1a6a'},nature:{label:'Nature & Space',color:'#c47a0a'}};
 const ENTRIES=[
-  {exp:0, cat:'animals',  emoji:'🦏',title:'Northern white rhinos',val:'2 = 2×10⁰',detail:'Only 2 remain — both female — at Ol Pejeta, Kenya. Functionally extinct in the wild.'},
-  {exp:1, cat:'animals',  emoji:'🐒',title:'Hainan gibbons',val:'~42 ≈ 4×10¹',detail:'The rarest ape on Earth. Confined to one forest reserve on Hainan island, China.'},
-  {exp:2, cat:'animals',  emoji:'🦜',title:'Kakapos',val:'242 ≈ 2×10²',detail:'The rarest flightless parrot. Conservation grew numbers from just 51 in 1995.'},
-  {exp:3, cat:'animals',  emoji:'🦎',title:'Komodo dragons',val:'<3,000 ≈ 3×10³',detail:"World's largest lizard. All live in Indonesia. Listed Endangered by IUCN."},
-  {exp:4, cat:'animals',  emoji:'🐺',title:'Maned wolves',val:'17,000 ≈ 1.7×10⁴',detail:"South America's tallest wild canid. Most live in Brazil's cerrado grasslands."},
-  {exp:5, cat:'animals',  emoji:'🐘',title:'African elephants',val:'415,000 ≈ 4×10⁵',detail:'Numbers halved 1979–1989 due to poaching. Now slowly recovering.'},
-  {exp:6, cat:'animals',  emoji:'🐊',title:'American alligators',val:'5 million = 5×10⁶',detail:'Once endangered. Now recovered to 5 million — a conservation success story.'},
-  {exp:7, cat:'animals',  emoji:'🐪',title:'Camels worldwide',val:'35 million ≈ 3.5×10⁷',detail:'Most in Africa and Asia. India has about 2.5 lakh — 0.7% of the world total.'},
-  {exp:8, cat:'animals',  emoji:'🦬',title:'Water buffaloes',val:'200 million = 2×10⁸',detail:"Over 97% live in Asia. India has the world's largest population."},
-  {exp:9, cat:'people',   emoji:'👥',title:'World human population',val:'8.2 billion = 8.2×10⁹',detail:'Took 300,000 years to reach 1 billion (1800). Reached 8 billion in 2022.'},
-  {exp:10,cat:'animals',  emoji:'🐔',title:'Chickens alive right now',val:'33 billion ≈ 3.3×10¹⁰',detail:'4 chickens for every human. More chickens alive at any moment than any other bird.'},
-  {exp:11,cat:'distance', emoji:'☀️',title:'Earth to Sun',val:'1.496×10¹¹ m',detail:'One Astronomical Unit (AU). Light takes 8 minutes 20 seconds to cover this.'},
-  {exp:12,cat:'animals',  emoji:'🌳',title:'Trees on Earth',val:'3 trillion = 3×10¹²',detail:'~400 trees per person. Being lost at about 15 billion per year to deforestation.'},
-  {exp:12,cat:'distance', emoji:'🪐',title:'Sun to Saturn',val:'1.4×10¹² m',detail:"About 9.5 AU. Saturn's famous rings span about 280,000 km."},
-  {exp:14,cat:'animals',  emoji:'🦟',title:'Mosquitoes on Earth',val:'110 trillion ≈ 10¹⁴',detail:'The most dangerous animal to humans. Found on every continent except Antarctica.'},
-  {exp:15,cat:'time',     emoji:'⛰️',title:'Age of Himalayas (sec)',val:'1.7×10¹⁵ s ≈ 55 Myr',detail:'Formed when the Indian Plate collided with Asia. Still growing ~5 mm/year.'},
-  {exp:16,cat:'animals',  emoji:'🐜',title:'Ants on Earth',val:'20 quadrillion = 2×10¹⁶',detail:'Ants alone outweigh all wild birds and wild mammals combined.'},
-  {exp:17,cat:'time',     emoji:'🌍',title:'Age of Earth (sec)',val:'1.4×10¹⁷ s ≈ 4.5 Gyr',detail:'Earth formed from gas and dust around the young Sun, about 4.5 billion years ago.'},
-  {exp:17,cat:'time',     emoji:'🌌',title:'Age of Milky Way (sec)',val:'4.3×10¹⁷ s ≈ 13.6 Gyr',detail:'Our galaxy formed just 200 million years after the Big Bang.'},
-  {exp:21,cat:'nature',   emoji:'🏖️',title:'Grains of sand (beaches)',val:'≈ 10²¹',detail:'More grains of sand than stars in the observable universe.'},
-  {exp:23,cat:'nature',   emoji:'⭐',title:'Stars in observable universe',val:'2×10²³',detail:'About 200 sextillion stars. Our Milky Way alone has ~100 billion of them.'},
+  {exp:0,cat:'animals',emoji:'🦏',title:'Northern white rhinos',val:'2 = 2x10^0',detail:'Only 2 remain — both female — at Ol Pejeta, Kenya.'},
+  {exp:1,cat:'animals',emoji:'🐒',title:'Hainan gibbons',val:'~42 ≈ 4x10^1',detail:'The rarest ape on Earth, confined to Hainan island, China.'},
+  {exp:2,cat:'animals',emoji:'🦜',title:'Kakapos',val:'242 ≈ 2x10^2',detail:'The rarest flightless parrot. Grew from just 51 in 1995.'},
+  {exp:3,cat:'animals',emoji:'🦎',title:'Komodo dragons',val:'<3,000 ≈ 3x10^3',detail:"World's largest lizard. All live in Indonesia. Endangered."},
+  {exp:4,cat:'animals',emoji:'🐺',title:'Maned wolves',val:'17,000 ≈ 1.7x10^4',detail:"South America's tallest wild canid, mostly in Brazil's cerrado."},
+  {exp:5,cat:'animals',emoji:'🐘',title:'African elephants',val:'415,000 ≈ 4x10^5',detail:'Numbers halved 1979-1989 from poaching. Now slowly recovering.'},
+  {exp:6,cat:'animals',emoji:'🐊',title:'American alligators',val:'5 million = 5x10^6',detail:'Once endangered. Now recovered — a conservation success story.'},
+  {exp:7,cat:'animals',emoji:'🐪',title:'Camels worldwide',val:'35 million ≈ 3.5x10^7',detail:'Most in Africa and Asia. India has about 2.5 lakh.'},
+  {exp:8,cat:'animals',emoji:'🦬',title:'Water buffaloes',val:'200 million = 2x10^8',detail:"Over 97% live in Asia. India has the world's largest population."},
+  {exp:9,cat:'people',emoji:'👥',title:'World human population',val:'8.2 billion = 8.2x10^9',detail:'Took 300,000 years to reach 1 billion (1800). Hit 8 billion in 2022.'},
+  {exp:10,cat:'animals',emoji:'🐔',title:'Chickens alive right now',val:'33 billion ≈ 3.3x10^10',detail:'4 chickens for every human. More than any other bird species.'},
+  {exp:11,cat:'distance',emoji:'☀️',title:'Earth to Sun',val:'1.496x10^11 m',detail:'One Astronomical Unit (AU). Light takes 8 min 20 sec.'},
+  {exp:12,cat:'animals',emoji:'🌳',title:'Trees on Earth',val:'3 trillion = 3x10^12',detail:'About 400 trees per person. Lost at 15 billion per year.'},
+  {exp:12,cat:'distance',emoji:'🪐',title:'Sun to Saturn',val:'1.4x10^12 m',detail:"About 9.5 AU. Saturn's rings span about 280,000 km."},
+  {exp:14,cat:'animals',emoji:'🦟',title:'Mosquitoes on Earth',val:'110 trillion ≈ 10^14',detail:'The most dangerous animal to humans worldwide.'},
+  {exp:15,cat:'time',emoji:'⛰️',title:'Age of Himalayas (sec)',val:'1.7x10^15 s ≈ 55 Myr',detail:'Formed when India collided with Asia. Still growing ~5 mm/year.'},
+  {exp:16,cat:'animals',emoji:'🐜',title:'Ants on Earth',val:'20 quadrillion = 2x10^16',detail:'Ants alone outweigh all wild birds and mammals combined.'},
+  {exp:17,cat:'time',emoji:'🌍',title:'Age of Earth (sec)',val:'1.4x10^17 s ≈ 4.5 Gyr',detail:'Earth formed from gas and dust about 4.5 billion years ago.'},
+  {exp:17,cat:'time',emoji:'🌌',title:'Age of Milky Way (sec)',val:'4.3x10^17 s ≈ 13.6 Gyr',detail:'Our galaxy formed just 200 million years after the Big Bang.'},
+  {exp:21,cat:'nature',emoji:'🏖️',title:'Grains of sand (beaches)',val:'≈ 10^21',detail:'More grains of sand than stars in the observable universe.'},
+  {exp:23,cat:'nature',emoji:'⭐',title:'Stars in observable universe',val:'2x10^23',detail:'About 200 sextillion stars. Milky Way has ~100 billion.'},
 ];
-
-function sup(n){return String(n).split('').map(c=>({'−':'⁻','-':'⁻','0':'⁰','1':'¹','2':'²','3':'³','4':'⁴','5':'⁵','6':'⁶','7':'⁷','8':'⁸','9':'⁹'}[c]||c)).join('')}
-
-// Category palette — warm earth tones
-const CAT_COLORS={
-  animals:  {stroke:'#1a5a2a',fill:'rgba(26,90,42,.08)',dot:'#1a5a2a'},
-  people:   {stroke:'#0a6a5a',fill:'rgba(10,106,90,.08)',dot:'#0a6a5a'},
-  distance: {stroke:'#a02020',fill:'rgba(160,32,32,.08)',dot:'#a02020'},
-  time:     {stroke:'#5a1a6a',fill:'rgba(90,26,106,.08)',dot:'#5a1a6a'},
-  nature:   {stroke:'#c47a0a',fill:'rgba(196,122,10,.08)',dot:'#c47a0a'},
-};
-
-let activeCat='all',zlo=0,zhi=23;
-let selectedEntry=null,lastSelected=null;
-let hitAreas=[];
-const PR=Math.min(window.devicePixelRatio||1,2);
-const cvs=document.getElementById('scale-cvs');
-const ctx=cvs.getContext('2d');
-
-function buildCats(){
-  const cont=document.getElementById('cat-list');
-  cont.innerHTML='';
-  Object.entries(CATS).forEach(([key,cfg])=>{
-    const btn=document.createElement('button');
-    btn.className='cat-btn'+(activeCat===key?' active':'');
-    btn.innerHTML=`<div class="cat-dot" style="background:${key==='all'?'var(--ink4)':cfg.color}"></div>${cfg.label}`;
-    btn.addEventListener('click',()=>{activeCat=key;buildCats();drawScale();});
-    cont.appendChild(btn);
-  });
-}
-
+function sup(n){const m={'0':'⁰','1':'¹','2':'²','3':'³','4':'⁴','5':'⁵','6':'⁶','7':'⁷','8':'⁸','9':'⁹','-':'⁻'};return String(n).split('').map(c=>m[c]||c).join('')}
+const CC={animals:{stroke:'#1a5a2a'},people:{stroke:'#0a6a5a'},distance:{stroke:'#a02020'},time:{stroke:'#5a1a6a'},nature:{stroke:'#c47a0a'}};
+let activeCat='all',zlo=0,zhi=23,selectedEntry=null,lastSelected=null,hitAreas=[];
+const PR=Math.min(window.devicePixelRatio||1,2),cvs=document.getElementById('scale-cvs'),ctx=cvs.getContext('2d');
+function buildCats(){const cont=document.getElementById('cat-list');cont.innerHTML='';Object.entries(CATS).forEach(([key,cfg])=>{const btn=document.createElement('button');btn.className='cat-btn'+(activeCat===key?' active':'');btn.innerHTML='<div class="cat-dot" style="background:'+(key==='all'?'var(--ink4)':cfg.color)+'"></div>'+cfg.label;btn.addEventListener('click',()=>{activeCat=key;buildCats();drawScale();});cont.appendChild(btn);});}
+function eY(e,H,PT,PB,dH){return PT+((e-zlo)/(zhi-zlo))*dH;}
 function drawScale(){
-  const wrap=cvs.parentElement;
-  const W=wrap.clientWidth;
-  const range=zhi-zlo;
-  const PPE=Math.max(36,Math.min(72,720/range));
-  const H=Math.max(500,range*PPE+100);
-  cvs.style.width=W+'px';cvs.style.height=H+'px';
-  cvs.width=W*PR;cvs.height=H*PR;
-  ctx.resetTransform();ctx.scale(PR,PR);
-  const PT=28,PB=28,PL=112,PRA=16;
-  const dH=H-PT-PB;
-  hitAreas=[];
-
-  // Parchment background with subtle banding
-  ctx.fillStyle='#f9f5ed';
-  ctx.fillRect(0,0,W,H);
-
-  // Alternating bands
-  for(let e=zlo;e<zhi;e++){
-    const y1=eY(e,H,PT,PB,dH),y2=eY(e+1,H,PT,PB,dH);
-    if(e%2===0){ctx.fillStyle='rgba(232,219,192,.35)';ctx.fillRect(PL,y1,W-PL-PRA,y2-y1);}
-  }
-
-  // Grid lines + exponent labels
+  const wrap=cvs.parentElement,W=wrap.clientWidth,range=zhi-zlo,PPE=Math.max(36,Math.min(72,720/range)),H=Math.max(500,range*PPE+100);
+  cvs.style.width=W+'px';cvs.style.height=H+'px';cvs.width=W*PR;cvs.height=H*PR;ctx.resetTransform();ctx.scale(PR,PR);
+  const PT=28,PB=28,PL=112,PRA=16,dH=H-PT-PB;hitAreas=[];
+  ctx.fillStyle='#f9f5ed';ctx.fillRect(0,0,W,H);
+  for(let e=zlo;e<zhi;e++){const y1=eY(e,H,PT,PB,dH),y2=eY(e+1,H,PT,PB,dH);if(e%2===0){ctx.fillStyle='rgba(232,219,192,.35)';ctx.fillRect(PL,y1,W-PL-PRA,y2-y1);}}
   for(let e=zlo;e<=zhi;e++){
-    const y=eY(e,H,PT,PB,dH);
-    const major=e%3===0;
-    ctx.strokeStyle=major?'rgba(100,90,70,.3)':'rgba(100,90,70,.12)';
-    ctx.lineWidth=major?1:0.5;ctx.setLineDash(major?[]:[2,3]);
-    ctx.beginPath();ctx.moveTo(PL,y);ctx.lineTo(W-PRA,y);ctx.stroke();ctx.setLineDash([]);
-    // ×10 annotation between lines when zoomed in
-    if(e<zhi&&range<=12){
-      const midY=(y+eY(e+1,H,PT,PB,dH))/2;
-      ctx.font='italic 10px Instrument Serif, serif';
-      ctx.fillStyle='rgba(120,110,80,.4)';ctx.textAlign='center';ctx.textBaseline='middle';
-      ctx.fillText('× 10',PL-24,midY);
-    }
-    // Exponent label
-    ctx.font=`${major?'bold ':''} 11px Space Mono,monospace`;
-    ctx.fillStyle=major?'rgba(28,22,8,.75)':'rgba(28,22,8,.4)';
-    ctx.textAlign='right';ctx.textBaseline='middle';
-    ctx.fillText('10'+sup(e),PL-5,y);
-    // tick
-    ctx.strokeStyle='rgba(100,90,70,.5)';ctx.lineWidth=1.5;ctx.setLineDash([]);
-    ctx.beginPath();ctx.moveTo(PL-4,y);ctx.lineTo(PL+4,y);ctx.stroke();
+    const y=eY(e,H,PT,PB,dH),major=e%3===0;
+    ctx.strokeStyle=major?'rgba(100,90,70,.3)':'rgba(100,90,70,.12)';ctx.lineWidth=major?1:.5;ctx.setLineDash(major?[]:[2,3]);ctx.beginPath();ctx.moveTo(PL,y);ctx.lineTo(W-PRA,y);ctx.stroke();ctx.setLineDash([]);
+    ctx.font=(major?'bold ':'')+' 11px Space Mono,monospace';ctx.fillStyle=major?'rgba(28,22,8,.75)':'rgba(28,22,8,.4)';ctx.textAlign='right';ctx.textBaseline='middle';ctx.fillText('10'+sup(e),PL-5,y);
+    ctx.strokeStyle='rgba(100,90,70,.5)';ctx.lineWidth=1.5;ctx.beginPath();ctx.moveTo(PL-4,y);ctx.lineTo(PL+4,y);ctx.stroke();
   }
-
-  // Axis line
-  ctx.strokeStyle='rgba(28,22,8,.5)';ctx.lineWidth=2;
-  ctx.beginPath();ctx.moveTo(PL,PT);ctx.lineTo(PL,PT+dH);ctx.stroke();
-
-  // ENTRIES
+  ctx.strokeStyle='rgba(28,22,8,.5)';ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(PL,PT);ctx.lineTo(PL,PT+dH);ctx.stroke();
   const filtered=ENTRIES.filter(en=>(activeCat==='all'||en.cat===activeCat)&&en.exp>=zlo&&en.exp<=zhi);
-  const byExp={};
-  filtered.forEach(en=>{if(!byExp[en.exp])byExp[en.exp]=[];byExp[en.exp].push(en);});
-
+  const byExp={};filtered.forEach(en=>{if(!byExp[en.exp])byExp[en.exp]=[];byExp[en.exp].push(en);});
   const EH=28,SX=PL+18;
   Object.entries(byExp).forEach(([es,entries])=>{
-    const e=+es;
-    const y=eY(e,H,PT,PB,dH);
-    const catCfg=CAT_COLORS[entries[0].cat]||{stroke:'rgba(100,90,70,.6)',fill:'rgba(100,90,70,.06)',dot:'rgba(100,90,70,.6)'};
+    const e=+es,y=eY(e,H,PT,PB,dH),catCfg=CC[entries[0].cat]||{stroke:'rgba(100,90,70,.6)'};
     entries.forEach((en,si)=>{
-      const isSel=en===selectedEntry;
-      const isy=y+si*(EH+4)-((entries.length-1)*(EH+4))/2;
-      const col=catCfg.stroke;
-      const alphaBase=isSel?1:.7;
-
-      // connector dot on axis
-      ctx.beginPath();ctx.arc(PL,isy,isSel?9:6,0,Math.PI*2);
-      ctx.fillStyle=isSel?col:'rgba(100,90,70,.25)';ctx.fill();
-      if(isSel){ctx.strokeStyle='var(--parch2)';ctx.lineWidth=2;ctx.stroke();}
-
-      // horizontal connector
-      ctx.strokeStyle=isSel?col:col.replace(/rgba\(([^)]+)\)/,'rgba($1,.35)');
-      ctx.lineWidth=isSel?1.5:0.8;
-      ctx.beginPath();ctx.moveTo(PL,isy);ctx.lineTo(SX,isy);ctx.stroke();
-
-      // emoji
-      ctx.globalAlpha=alphaBase;
-      ctx.font='16px serif';ctx.textAlign='left';ctx.textBaseline='middle';
-      ctx.fillText(en.emoji,SX,isy);
-
-      // title
-      ctx.globalAlpha=1;
-      ctx.font=isSel?'bold 12px Space Mono,monospace':'11px Space Mono,monospace';
-      ctx.fillStyle=isSel?'rgba(28,22,8,.95)':'rgba(28,22,8,.65)';
-      ctx.textAlign='left';ctx.textBaseline='middle';
-      const maxW=W-SX-30-20;
-      let title=en.title;
-      while(ctx.measureText(title).width>maxW&&title.length>6)title=title.slice(0,-4)+'…';
-      ctx.fillText(title,SX+20,isy-5);
-
-      // value
-      ctx.font='9px Space Mono,monospace';
-      ctx.fillStyle=isSel?col:'rgba(100,90,70,.55)';
-      ctx.fillText(en.val,SX+20,isy+7);
-
-      // selected: glow line
-      if(isSel){
-        ctx.strokeStyle=col.replace(/rgba?\([^)]+\)/,c=>c)+'+40';
-        const gGrad=ctx.createLinearGradient(PL,0,SX+200,0);
-        gGrad.addColorStop(0,'transparent');gGrad.addColorStop(.3,col+'55');gGrad.addColorStop(1,'transparent');
-        ctx.fillStyle=gGrad;
-        ctx.fillRect(PL,isy-EH/2,Math.min(W-PL,240),EH);
-      }
-
+      const isSel=en===selectedEntry,isy=y+si*(EH+4)-((entries.length-1)*(EH+4))/2,col=catCfg.stroke,alpha=isSel?1:.7;
+      ctx.beginPath();ctx.arc(PL,isy,isSel?9:6,0,Math.PI*2);ctx.fillStyle=isSel?col:'rgba(100,90,70,.25)';ctx.fill();
+      ctx.strokeStyle=col;ctx.lineWidth=isSel?1.5:.8;ctx.beginPath();ctx.moveTo(PL,isy);ctx.lineTo(SX,isy);ctx.stroke();
+      ctx.globalAlpha=alpha;ctx.font='16px serif';ctx.textAlign='left';ctx.textBaseline='middle';ctx.fillText(en.emoji,SX,isy);ctx.globalAlpha=1;
+      ctx.font=isSel?'bold 12px Space Mono,monospace':'11px Space Mono,monospace';ctx.fillStyle=isSel?'rgba(28,22,8,.95)':'rgba(28,22,8,.65)';ctx.textAlign='left';ctx.textBaseline='middle';
+      const maxW=W-SX-50;let title=en.title;while(ctx.measureText(title).width>maxW&&title.length>6)title=title.slice(0,-4)+'...';
+      ctx.fillText(title,SX+20,isy-5);ctx.font='9px Space Mono,monospace';ctx.fillStyle=isSel?col:'rgba(100,90,70,.55)';ctx.fillText(en.val,SX+20,isy+7);
       hitAreas.push({en,x:PL-12,y:isy-EH/2,w:Math.min(W-PL,320),h:EH});
     });
   });
-
-  document.getElementById('tr-val').textContent='10'+sup(zlo)+' — 10'+sup(zhi);
+  document.getElementById('tr-val').textContent='10'+sup(zlo)+' to 10'+sup(zhi);
 }
-
-function eY(e,H,PT,PB,dH){
-  const range=zhi-zlo,t=(e-zlo)/range;
-  return PT+t*dH;
-}
-
-cvs.addEventListener('click',e=>{
-  const r=cvs.getBoundingClientRect(),mx=e.clientX-r.left,my=e.clientY-r.top;
-  let hit=null;
-  for(const a of hitAreas){if(mx>=a.x&&mx<=a.x+a.w&&my>=a.y&&my<=a.y+a.h){hit=a.en;break;}}
-  if(hit===selectedEntry){selectedEntry=null;}
-  else{lastSelected=selectedEntry;selectedEntry=hit;}
-  drawScale();updateSel();
-});
-
 function updateSel(){
-  const card=document.getElementById('sel-card');
-  const cmp=document.getElementById('cmp-strip');
-  if(!selectedEntry){
-    card.innerHTML='<div class="sel-empty">Click any marker on the scale →</div>';
-    cmp.classList.remove('show');lastSelected=null;return;
-  }
-  const col=CAT_COLORS[selectedEntry.cat]?.stroke||'var(--ochre)';
-  card.innerHTML=`
-    <div class="sel-exp" style="color:${col}">10${sup(selectedEntry.exp)}</div>
-    <div class="sel-title">${selectedEntry.emoji} ${selectedEntry.title}</div>
-    <div class="sel-val">${selectedEntry.val}</div>
-    <div class="sel-detail">${selectedEntry.detail}</div>
-  `;
+  const card=document.getElementById('sel-card'),cmp=document.getElementById('cmp-strip');
+  if(!selectedEntry){card.innerHTML='<div class="sel-empty">Click any marker on the scale</div>';cmp.classList.remove('show');lastSelected=null;return;}
+  const col=CC[selectedEntry.cat]?.stroke||'var(--ochre)';
+  card.innerHTML='<div class="sel-exp" style="color:'+col+'">10'+sup(selectedEntry.exp)+'</div><div class="sel-title">'+selectedEntry.emoji+' '+selectedEntry.title+'</div><div class="sel-val">'+selectedEntry.val+'</div><div class="sel-detail">'+selectedEntry.detail+'</div>';
   if(lastSelected&&lastSelected!==selectedEntry){
-    const big=selectedEntry.exp>=lastSelected.exp?selectedEntry:lastSelected;
-    const small=selectedEntry.exp>=lastSelected.exp?lastSelected:selectedEntry;
-    const diff=big.exp-small.exp;
-    const factor=Math.pow(10,diff);
-    const fs=diff>=6?factor.toExponential(0):factor.toLocaleString('en-IN');
-    cmp.classList.add('show');
-    cmp.innerHTML=`${big.emoji} <strong>${big.title}</strong> (10${sup(big.exp)})<br>is <span class="cmp-big">${fs}×</span> larger than<br>${small.emoji} <strong>${small.title}</strong> (10${sup(small.exp)})<br><span style="font-size:9px;color:var(--ink4)">exponent difference: 10${sup(diff)} = ${fs}</span>`;
+    const big=selectedEntry.exp>=lastSelected.exp?selectedEntry:lastSelected,small=big===selectedEntry?lastSelected:selectedEntry;
+    const diff=big.exp-small.exp,fs=diff>=6?Math.pow(10,diff).toExponential(0):'10'+sup(diff);
+    cmp.classList.add('show');cmp.innerHTML=big.emoji+' <strong>'+big.title+'</strong><br>is <span class="cmp-big">'+fs+'x</span> larger than<br>'+small.emoji+' <strong>'+small.title+'</strong>';
   } else cmp.classList.remove('show');
 }
-
-document.getElementById('zlo').addEventListener('input',e=>{
-  zlo=Math.min(+e.target.value,zhi-1);e.target.value=zlo;
-  document.getElementById('zlo-v').textContent='10'+sup(zlo);drawScale();
-});
-document.getElementById('zhi').addEventListener('input',e=>{
-  zhi=Math.max(+e.target.value,zlo+1);e.target.value=zhi;
-  document.getElementById('zhi-v').textContent='10'+sup(zhi);drawScale();
-});
-
+cvs.addEventListener('click',e=>{const r=cvs.getBoundingClientRect(),mx=e.clientX-r.left,my=e.clientY-r.top;let hit=null;for(const a of hitAreas)if(mx>=a.x&&mx<=a.x+a.w&&my>=a.y&&my<=a.y+a.h){hit=a.en;break;}if(hit===selectedEntry)selectedEntry=null;else{lastSelected=selectedEntry;selectedEntry=hit;}drawScale();updateSel();});
+document.getElementById('zlo').addEventListener('input',e=>{zlo=Math.min(+e.target.value,zhi-1);e.target.value=zlo;document.getElementById('zlo-v').textContent='10'+sup(zlo);drawScale();});
+document.getElementById('zhi').addEventListener('input',e=>{zhi=Math.max(+e.target.value,zlo+1);e.target.value=zhi;document.getElementById('zhi-v').textContent='10'+sup(zhi);drawScale();});
 let rt;new ResizeObserver(()=>{clearTimeout(rt);rt=setTimeout(drawScale,80);}).observe(cvs.parentElement);
 buildCats();drawScale();
 </script>
